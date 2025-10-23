@@ -1,5 +1,5 @@
 // app/index.tsx
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { Video } from "expo-av";
+import { VideoView, useVideoPlayer } from "expo-video";
+
 import { LinearGradient } from "expo-linear-gradient";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import * as IMAGES from "../../../components/Images";
@@ -382,6 +383,11 @@ export default function Index() {
     };
   });
 
+  const player = useVideoPlayer(IMAGES.HomeImage, (player) => {
+    player.loop = true;
+    player.muted = true;
+    player.play();
+  });
   // Animated style for fixedTopBar (show only after video hides)
   const fixedTopBarAnimatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -434,13 +440,11 @@ export default function Index() {
       <Animated.View
         style={[styles.headerContainer, headerAnimatedStyle, { zIndex: 0 }]} // ensure video is below
       >
-        <Video
-          source={IMAGES.HomeImage}
+        
+        <VideoView
+          player={player}
           style={[StyleSheet.absoluteFill, { opacity: 0.8 }]}
-          resizeMode="cover"
-          shouldPlay
-          isLooping
-          isMuted
+          contentFit="cover"
         />
         <LinearGradient
           colors={[
@@ -467,7 +471,6 @@ export default function Index() {
         </View>
         <LinearGradient
           colors={[
-
             "rgba(255, 255, 255, 0.75)",
             "rgba(255, 255, 255, 0.45)",
             "rgba(255, 255, 255, 0.2)",
@@ -509,8 +512,9 @@ export default function Index() {
         {/* Community Posts */}
         {renderCommunityPosts()}
         <View style={styles.communityGrid}>
-          <TouchableOpacity style={styles.communityItem}
-          onPress={()=>router.push("./viewDrafts")}
+          <TouchableOpacity
+            style={styles.communityItem}
+            onPress={() => router.push("/tabs/home/viewDrafts")}
           >
             <View style={styles.communityIconView}>
               <View style={styles.badge}>
@@ -524,8 +528,9 @@ export default function Index() {
             </View>
             <Text style={styles.communityText}>View Drafts</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.communityItem}
-          onPress={()=>router.push("./createNewPost")}
+          <TouchableOpacity
+            style={styles.communityItem}
+            onPress={() => router.push("/tabs/home/createNewPost")}
           >
             <View style={styles.communityIconView}>
               <Image

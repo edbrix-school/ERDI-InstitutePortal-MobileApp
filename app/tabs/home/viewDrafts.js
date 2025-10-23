@@ -76,17 +76,17 @@ const DraftItem = ({ title, description }) => (
     </View>
     <View style={styles.iconContainer}>
       <TouchableOpacity
-        onPress={() => console.log(`Edit ${title}`)}
+        // onPress={() => console.log(`Edit ${title}`)}
         style={styles.iconButton}
       >
-        <Feather name="edit" size={20} color="gray" />{" "}
+        <Feather name="edit" size={20} color="gray" />
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => console.log(`Delete ${title}`)}
+        // onPress={() => console.log(`Delete ${title}`)}
         style={styles.iconButton}
       >
-        <Ionicons name="trash-outline" size={22} color="#dc3545" />{" "}
+        <Ionicons name="trash-outline" size={22} color="#dc3545" />
       </TouchableOpacity>
     </View>
   </View>
