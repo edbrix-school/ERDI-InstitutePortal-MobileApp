@@ -978,8 +978,7 @@ export default function Schedule() {
                 padding: RFValue(5),
                 borderRadius: RFValue(5),
               }}
-            onPress={() => router.push("/tabs/schedule/eventMaps")}
-            
+              onPress={() => router.push("/tabs/schedule/eventMaps")}
             >
               <Image
                 source={IMAGES.Routing}
@@ -1012,7 +1011,35 @@ export default function Schedule() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+        paddingTop: RFPercentage(7),
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingHorizontal: RFValue(20),
+          backgroundColor: "#fff",
+          paddingBottom: RFPercentage(2),
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={IMAGES.PortalImage}
+          style={styles.LogoIconHeader}
+          resizeMode="contain"
+        />
+        <Image
+          source={{ uri: PROFILE_IMAGE_URL }}
+          style={styles.ProfileiconHeader}
+          resizeMode="contain"
+        />
+      </View>
+
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* --- Header/Background Section --- */}
         <ImageBackground
@@ -1021,28 +1048,6 @@ export default function Schedule() {
           style={{}}
         >
           {/* --- Top Bar (Logo/Profile) --- */}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: RFValue(20),
-              backgroundColor: "#fff",
-            }}
-          >
-            <Image
-              source={IMAGES.PortalImage}
-              style={styles.LogoIconHeader}
-              resizeMode="contain"
-            />
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Image
-                source={{ uri: PROFILE_IMAGE_URL }}
-                style={styles.ProfileiconHeader}
-                resizeMode="contain"
-              />
-            </View>
-          </View>
 
           <View style={{ paddingHorizontal: 20 }}>
             {/* --- Schedule Title --- */}
@@ -1443,14 +1448,14 @@ export default function Schedule() {
         isVisible={isCalendarModalVisible}
         onClose={toggleCalenderModal}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   LogoIconHeader: {
     width: RFValue(40),
-    height: RFValue(40),
+    height: RFValue(25),
     tintColor: "gray",
   },
   ProfileiconHeader: {

@@ -836,6 +836,7 @@ export default function EventDetails() {
             alignItems: "center",
             justifyContent: "center",
           }}
+           onPress={() => router.push("/tabs/schedule/eventMaps")}
         >
           <Image
           source={IMAGES.Routing}
