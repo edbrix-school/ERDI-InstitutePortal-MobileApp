@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import { VideoView, useVideoPlayer } from "expo-video";
 
@@ -135,7 +136,7 @@ const ANNOUNCEMENTS = [
 ];
 
 // --- CONSTANTS ---
-const HEADER_MAX_HEIGHT = Dimensions.get("window").height * 0.35;
+const HEADER_MAX_HEIGHT = Dimensions.get("window").height * 0.3;
 const HEADER_MIN_HEIGHT = RFValue(60); // Height of the minimized bar
 const SCROLL_RANGE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const PROFILE_IMAGE_URL = "https://i.pravatar.cc/150?img=5";
@@ -440,45 +441,43 @@ export default function Index() {
       <Animated.View
         style={[styles.headerContainer, headerAnimatedStyle, { zIndex: 0 }]} // ensure video is below
       >
-        
-        <VideoView
-          player={player}
-          style={[StyleSheet.absoluteFill, { opacity: 0.8 }]}
-          contentFit="cover"
-        />
-        <LinearGradient
-          colors={[
-            "rgba(0, 0, 0, 0.1)",
-            "rgba(0, 0, 0, 0.05)",
-            "rgba(0, 0, 0, 0.15)",
+        <ImageBackground
+          source={IMAGES.Homebackground}
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: RFPercentage(10),
+            },
           ]}
-          style={StyleSheet.absoluteFill}
-        />
-        <View style={styles.headerContent}>
-          <Animated.View
-            style={[styles.headerTitleContainer, headerTextAnimatedStyle]}
-          >
-            <Image
-              source={IMAGES.PortalImage}
-              style={styles.LogoIcon}
-              resizeMode="contain"
-            />
-            <Text style={[styles.historyText, { marginTop: RFValue(5) }]}>
-              Celebrating 40
-            </Text>
-            <Text style={styles.historyText}>years of History</Text>
-          </Animated.View>
-        </View>
-        <LinearGradient
-          colors={[
-            "rgba(255, 255, 255, 0.75)",
-            "rgba(255, 255, 255, 0.45)",
-            "rgba(255, 255, 255, 0.2)",
-          ]}
-          style={StyleSheet.absoluteFill}
-        />
+        >
+          <Image
+            source={IMAGES.HomeLogo}
+            style={{ height: RFValue(70), width: RFValue(130) }}
+            resizeMode="contain"
+          />
+
+          <View style={styles.headerContent}>
+            <Animated.View
+              style={[styles.headerTitleContainer, headerTextAnimatedStyle]}
+            ></Animated.View>
+          </View>
+        </ImageBackground>
       </Animated.View>
 
+      <ImageBackground
+        source={IMAGES.HomeBg}
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: RFPercentage(10),
+          },
+        ]}
+        resizeMode="contain"
+      ></ImageBackground>
       {/* 2. Scrollable Content */}
       <Animated.ScrollView
         style={[styles.scrollView, { zIndex: 10 }]} // <-- bring above video
@@ -499,7 +498,7 @@ export default function Index() {
         >
           {/* Upcoming Appointments */}
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Upcoming Appointments</Text>
+            <Text style={styles.sectionTitle}>My <Text style={{fontWeight:'400'}}>Schedule</Text></Text>
             <Image source={IMAGES.Export} style={styles.iconSmall} />
           </View>
           <FlatList
@@ -711,7 +710,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: RFValue(10),
+    marginBottom: RFValue(20),
   },
   sectionTitle: {
     fontSize: RFValue(16),

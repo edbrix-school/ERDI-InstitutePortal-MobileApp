@@ -19,5 +19,8 @@ export const Map = require("../assets/images/Map.png");
 export const Routing = require("../assets/images/routing.png");
 export const Microsoft = require("../assets/images/microsoft.png");
 export const GoogleCalender = require("../assets/images/googleCalender.png");
+export const Homebackground = require("../assets/images/Homebackground.png");
+export const HomeBg = require("../assets/images/HomeBg.png");
+export const HomeLogo = require("../assets/images/HomeLogo.png");
 
 export const HomeImage = require("../assets/videos/HomeScreen.mp4")

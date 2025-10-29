@@ -708,8 +708,8 @@ export default function Schedule() {
                   backgroundColor: COLORS.white,
                   borderTopLeftRadius: RFValue(25),
                   borderTopRightRadius: RFValue(25),
-                  paddingHorizontal: RFValue(20),
-                  paddingTop: RFValue(15),
+                  paddingHorizontal: RFValue(10),
+                  paddingTop: RFValue(10),
                   paddingBottom: RFPercentage(5),
                 }}
               >
@@ -750,7 +750,7 @@ export default function Schedule() {
                       flex: 1,
                       backgroundColor: MODAL_COLORS.cardBg,
                       borderRadius: RFValue(15),
-                      padding: RFValue(20),
+                      padding: RFValue(10),
                       alignItems: "center",
                       justifyContent: "center",
                       elevation: 5,
@@ -758,6 +758,7 @@ export default function Schedule() {
                       shadowOffset: { width: 0, height: 2 },
                       shadowOpacity: 0.1,
                       shadowRadius: 3.84,
+                      margin: RFPercentage(2),
                     }}
                     onPress={() => {
                       onClose();
@@ -766,8 +767,8 @@ export default function Schedule() {
                     <Image
                       source={IMAGES.GoogleCalender}
                       style={{
-                        width: RFValue(50),
-                        height: RFValue(50),
+                        width: RFValue(40),
+                        height: RFValue(40),
                         marginBottom: RFValue(10),
                       }}
                       resizeMode="contain"
@@ -797,6 +798,7 @@ export default function Schedule() {
                       shadowOffset: { width: 0, height: 2 },
                       shadowOpacity: 0.1,
                       shadowRadius: 3.84,
+                      margin: RFPercentage(2),
                     }}
                     onPress={() => {
                       console.log("MS 365 Calendar Selected");

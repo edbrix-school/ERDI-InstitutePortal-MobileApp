@@ -98,7 +98,7 @@ export default function ViewDrafts() {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
       <TouchableOpacity style={styles.header} onPress={() => handleGoBack()}>
         <View >
           <Image
@@ -123,7 +123,7 @@ export default function ViewDrafts() {
           showsVerticalScrollIndicator={false}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "rgb(240,242,246)",
+    paddingTop:RFPercentage(7)
   },
 
   header: {

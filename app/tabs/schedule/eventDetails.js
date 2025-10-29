@@ -468,7 +468,7 @@ const AgendaSessionCard = ({ session }) => (
                       flex: 1,
                       backgroundColor: MODAL_COLORS.cardBg,
                       borderRadius: RFValue(15),
-                      padding: RFValue(20),
+                      padding: RFValue(10),
                       alignItems: "center",
                       justifyContent: "center",
                       elevation: 5,
@@ -476,6 +476,7 @@ const AgendaSessionCard = ({ session }) => (
                       shadowOffset: { width: 0, height: 2 },
                       shadowOpacity: 0.1,
                       shadowRadius: 3.84,
+                      margin: RFPercentage(2),
                     }}
                     onPress={() => {
                       onClose();
@@ -515,6 +516,7 @@ const AgendaSessionCard = ({ session }) => (
                       shadowOffset: { width: 0, height: 2 },
                       shadowOpacity: 0.1,
                       shadowRadius: 3.84,
+                      margin: RFPercentage(2),
                     }}
                     onPress={() => {
                       console.log("MS 365 Calendar Selected");

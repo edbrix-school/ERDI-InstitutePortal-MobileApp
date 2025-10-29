@@ -125,7 +125,7 @@ export default function CreateNewPost() {
     router.back();
   };
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
       <TouchableOpacity style={styles.header} onPress={() => handleGoBack()}>
         <View onPress={() => router.back()}>
           <Image
@@ -281,7 +281,7 @@ export default function CreateNewPost() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "rgb(241,242,246)",
+    paddingTop:RFPercentage(7)
   },
   header: {
     flexDirection: "row",

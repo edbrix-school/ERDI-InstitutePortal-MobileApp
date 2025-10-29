@@ -2,7 +2,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, SafeAreaView, Dimensio
 import React from 'react';
 import { Ionicons, Feather } from '@expo/vector-icons'; 
 import { router } from 'expo-router';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 const { width } = Dimensions.get('window');
 const DUMMY_IMAGE_URL = 'https://picsum.photos/800/400?random=1';
@@ -29,7 +29,7 @@ export default function CommunityPostDetails() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: '#fff',paddingTop:RFPercentage(7) }}>
       {/* Header */}
       <TouchableOpacity 
         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 15, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#eee' }}
@@ -98,6 +98,6 @@ export default function CommunityPostDetails() {
           <Text style={{ marginLeft: 8, fontSize: 16, fontWeight: '600', color: '#000' }}>{postData.likes}</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

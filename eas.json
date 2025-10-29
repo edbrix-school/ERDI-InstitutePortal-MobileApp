@@ -1,0 +1,34 @@
+{
+  "cli": {
+    "version": ">= 3.0.0"
+  },
+  "build": {
+    "development": {
+      "android": {
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_KOTLIN_VERSION": "1.7.10"
+        }
+      }
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk",
+        "env": {
+          "EXPO_USE_KOTLIN_VERSION": "1.7.10"
+        }
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle",
+        "env": {
+          "EXPO_USE_KOTLIN_VERSION": "1.7.10"
+        }
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
