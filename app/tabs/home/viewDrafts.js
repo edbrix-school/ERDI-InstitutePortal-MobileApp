@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 
 import { Ionicons, Feather } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import * as IMAGES from "../../../components/Images";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { router } from "expo-router";
@@ -37,7 +29,7 @@ const DRAFT_DATA = [
     id: "4",
     title: "Transforming Education Through Leadership",
     description:
-      "Education leaders play a crucial role in shaping the future of learning! They inspir...",
+      "Education leaders play a crucial role in shaping the future of learning. They inspir...",
   },
   {
     id: "5",
@@ -51,157 +43,134 @@ const DRAFT_DATA = [
     description:
       "Education leaders play a crucial role in shaping the future of learning! They inspire teachers and students alike, fostering an environment where innovation thrives. By...",
   },
-
-  {
-    id: "7",
-    title: "Innovating for Future Learning",
-    description:
-      "Embracing new technologies and pedagogies is key to preparing students for tomorrow. By...",
-  },
-  {
-    id: "8",
-    title: "Building Inclusive Classrooms",
-    description:
-      "Creating equitable and accessible learning environments for all students is our priority. By...",
-  },
 ];
 
 const DraftItem = ({ title, description }) => (
-  <View style={styles.itemContainer}>
-    <View style={styles.textContainer}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description} numberOfLines={3}>
+  <View
+    style={{
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: RFValue(10),
+      paddingHorizontal: RFValue(10),
+      backgroundColor: "#FFFFFF",
+      borderRadius: RFValue(10),
+      marginBottom: RFValue(18),
+      shadowColor: "#000",
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 2 },
+      elevation: 3,
+    }}
+  >
+    <View style={{ flex: 1, borderWidth: 0 }}>
+      <Text
+        style={{
+          fontSize: RFValue(12),
+          fontFamily: "Montserrat_700",
+          color: "#2D3748",
+          marginBottom: RFValue(5),
+        }}
+      >
+        {title}
+      </Text>
+
+      <Text
+        style={{
+          fontSize: RFValue(10),
+          fontFamily: "Montserrat_400",
+          color: "#596273",
+        }}
+        numberOfLines={4}
+      >
         {description}
       </Text>
     </View>
-    <View style={styles.iconContainer}>
-      <TouchableOpacity
-        // onPress={() => console.log(`Edit ${title}`)}
-        style={styles.iconButton}
-      >
-        <Feather name="edit" size={20} color="gray" />
+
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: RFValue(2),
+      }}
+    >
+      <TouchableOpacity style={{ padding: RFValue(4) }}>
+        <Image
+          source={IMAGES.Edit}
+          style={{ height: RFValue(17), width: RFValue(17) }}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
 
-      <TouchableOpacity
-        // onPress={() => console.log(`Delete ${title}`)}
-        style={styles.iconButton}
-      >
-        <Ionicons name="trash-outline" size={22} color="#dc3545" />
+      <TouchableOpacity style={{ padding: RFValue(4), paddingRight: 0 }}>
+        <Image
+          source={IMAGES.Trash}
+          style={{ height: RFValue(17), width: RFValue(17) }}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
     </View>
   </View>
 );
 
 export default function ViewDrafts() {
-  const handleGoBack = () => {
-    router.back(); 
-  };
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.style = [{ fontFamily: "Montserrat_400" }];
 
   return (
-    <View style={styles.screen}>
-      <TouchableOpacity style={styles.header} onPress={() => handleGoBack()}>
-        <View >
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#EEF1F5",
+        paddingTop: RFPercentage(7),
+      }}
+    >
+      {/* Header */}
+      <TouchableOpacity
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: RFValue(18),
+          paddingBottom: RFValue(10),
+          borderBottomWidth: 1,
+          borderBottomColor: "rgba(188,167,148,0.25)",
+        }}
+        onPress={() => router.back()}
+      >
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image
             source={IMAGES.GoBack}
-            style={{ height: RFValue(20), width: RFValue(20) }}
-            resizeMode="contain"
+            style={{ width: RFValue(17), height: RFValue(17) }}
           />
         </View>
-        <Text style={styles.headerTitle}>Your Drafts</Text>
 
-        <View style={{ width: 24 }} />
+        <Text
+          style={{
+            fontSize: RFValue(14),
+            fontFamily: "Montserrat_700",
+            color: "#2D3748",
+            marginLeft: RFValue(12),
+          }}
+        >
+          Your Drafts
+        </Text>
+
+        <View style={{ width: RFValue(22) }} />
       </TouchableOpacity>
 
-      <View style={{ paddingBottom: RFPercentage(15) }}>
-        <FlatList
-          data={DRAFT_DATA}
-          renderItem={({ item }) => (
-            <DraftItem title={item.title} description={item.description} />
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      <FlatList
+        data={DRAFT_DATA}
+        renderItem={({ item }) => (
+          <DraftItem title={item.title} description={item.description} />
+        )}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: RFValue(16),
+          paddingTop: RFValue(18),
+          paddingBottom: RFPercentage(10),
+        }}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "rgb(240,242,246)",
-    paddingTop:RFPercentage(7)
-  },
-
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#ccc",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "black",
-    marginLeft: RFPercentage(3),
-  },
-
-  listContent: {
-    paddingTop: 0,
-    paddingBottom: 20,
-  },
-
-  itemContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    paddingHorizontal: 16,
-    paddingVertical: 18,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#fff",
-    marginHorizontal: RFPercentage(1),
-    marginVertical: RFValue(5),
-    borderRadius: RFValue(7),
-
-    // ✅ Shadow (iOS)
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-
-    // ✅ Shadow (Android)
-    elevation: 4,
-    backgroundColor: "#fff", // required for shadow to show on Android
-  },
-
-  textContainer: {
-    flex: 1,
-    marginRight: 10,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 4,
-    color: "#333",
-  },
-  description: {
-    fontSize: 14,
-    color: "gray",
-    lineHeight: 20,
-  },
-  iconContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 4,
-  },
-  iconButton: {
-    padding: 6,
-    marginLeft: 10,
-  },
-});

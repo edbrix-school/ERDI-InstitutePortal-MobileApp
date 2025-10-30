@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  Image,
   // Modal is often used for true dropdowns, but we will use conditional rendering and absolute positioning
   // to adhere to the strict inline styling request without introducing a full Modal implementation.
 } from "react-native";
@@ -13,11 +14,7 @@ import React, { useState } from "react";
 import { AntDesign, Ionicons, FontAwesome } from "@expo/vector-icons";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { router } from "expo-router";
-// Assuming 'router' is available from 'expo-router' based on your previous code
-// import { router } from "expo-router"; 
-
-// --- Configuration ---
-const { width } = Dimensions.get("window");
+import * as IMAGES from "../../../components/Images";
 
 const COLORS = {
   white: "#FFFFFF",
@@ -51,8 +48,8 @@ const BOOKING_DATA = [
   {
     id: "1",
     status: "CONFIRMED",
-    statusColor: COLORS.confirmedGreen,
-    backgroundColor: COLORS.lightGreenBackground,
+    statusColor: "rgb(84,131,83)",
+    backgroundColor: "rgb(217,249,229)",
     title: "Summer Institute 2024",
     meetingDetail: "Meeting with Liam Norman",
     date: "Mon, Nov - 16, 2024",
@@ -61,8 +58,8 @@ const BOOKING_DATA = [
   {
     id: "2",
     status: "PENDING",
-    statusColor: COLORS.pendingOrange,
-    backgroundColor: COLORS.lightOrangeBackground,
+    statusColor: "rgb(183,133,87)",
+    backgroundColor: "rgb(230,216,194)",
     title: "Summer Institute 2024",
     meetingDetail: "Meeting with Ethan Carter",
     date: "Mon, Nov - 16, 2024",
@@ -71,8 +68,8 @@ const BOOKING_DATA = [
   {
     id: "3",
     status: "CANCELLED",
-    statusColor: COLORS.cancelledRed,
-    backgroundColor: COLORS.lightGreyBackground,
+    statusColor: "rgb(114,145,164)",
+    backgroundColor: "rgb(226,233,236)",
     title: "Summer Institute 2024",
     meetingDetail: "Meeting with Olivia Johnson",
     date: "Mon, Nov - 16, 2024",
@@ -81,8 +78,8 @@ const BOOKING_DATA = [
   {
     id: "4",
     status: "CONFIRMED",
-    statusColor: COLORS.confirmedGreen,
-    backgroundColor: COLORS.lightGreenBackground,
+    statusColor: "rgb(84,131,83)",
+    backgroundColor: "rgb(217,249,229)",
     title: "Summer Institute 2024",
     meetingDetail: "Meeting with Liam Norman",
     date: "Mon, Nov - 16, 2024",
@@ -91,8 +88,18 @@ const BOOKING_DATA = [
 ];
 
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -103,61 +110,62 @@ const YEAR_RANGE = Array.from(
 ).reverse();
 
 const FILTER_TABS = [
-    { key: 'all', label: 'All' },
-    { key: 'confirmed', label: 'Confirmed' },
-    { key: 'pending', label: 'Pending' },
-    { key: 'cancelled', label: 'Cancelled' },
+  { key: "all", label: "All" },
+  { key: "confirmed", label: "Confirmed" },
+  { key: "pending", label: "Pending" },
+  { key: "cancelled", label: "Cancelled" },
 ];
 
 // --- Custom Components ---
 
 // New Component for Filter Tabs
 const BookingFilterTabs = ({ selectedFilter, onSelectFilter }) => (
-    <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ 
-            paddingHorizontal: RFValue(20), 
-            paddingBottom: RFValue(15), 
-            marginTop: RFValue(5) 
-        }}
-    >
-        {FILTER_TABS.map((tab) => {
-            const isSelected = tab.key === selectedFilter;
-            return (
-                <TouchableOpacity
-                    key={tab.key}
-                    onPress={() => onSelectFilter(tab.key)}
-                    style={{
-                        paddingHorizontal: RFValue(15),
-                        paddingVertical: RFValue(10),
-                        borderRadius: RFValue(8),
-                        marginRight: RFValue(10),
-                        backgroundColor: isSelected ? COLORS.activeTabBlue : COLORS.cardGrey,
-                        borderWidth: isSelected ? 0 : 1,
-                        borderColor: COLORS.mediumGrey,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 1 },
-                        shadowOpacity: isSelected ? 0.2 : 0,
-                        shadowRadius: isSelected ? 2 : 0,
-                        elevation: isSelected ? 3 : 0,
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontSize: RFValue(12),
-                            fontWeight: isSelected ? "bold" : "500",
-                            color: isSelected ? COLORS.white : COLORS.darkText,
-                        }}
-                    >
-                        {tab.label}
-                    </Text>
-                </TouchableOpacity>
-            );
-        })}
-    </ScrollView>
+  <ScrollView
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={{
+      paddingHorizontal: RFValue(20),
+      paddingBottom: RFValue(15),
+      marginTop: RFValue(5),
+    }}
+  >
+    {FILTER_TABS.map((tab) => {
+      const isSelected = tab.key === selectedFilter;
+      return (
+        <TouchableOpacity
+          key={tab.key}
+          onPress={() => onSelectFilter(tab.key)}
+          style={{
+            paddingHorizontal: RFValue(15),
+            paddingVertical: RFValue(10),
+            borderRadius: RFValue(8),
+            marginRight: RFValue(10),
+            backgroundColor: isSelected
+              ? COLORS.activeTabBlue
+              : COLORS.cardGrey,
+            borderWidth: isSelected ? 0 : 1,
+            borderColor: COLORS.mediumGrey,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: isSelected ? 0.2 : 0,
+            shadowRadius: isSelected ? 2 : 0,
+            elevation: isSelected ? 3 : 0,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: RFValue(12),
+              color: isSelected ? COLORS.white : COLORS.darkText,
+              fontFamily: isSelected ? "Montserrat_600" : "Montserrat_400",
+            }}
+          >
+            {tab.label}
+          </Text>
+        </TouchableOpacity>
+      );
+    })}
+  </ScrollView>
 );
-
 
 const CalendarDayScroller = ({ selectedId, handleSelect }) => (
   <View style={{ marginVertical: RFValue(15), marginLeft: RFValue(20) }}>
@@ -185,7 +193,7 @@ const CalendarDayScroller = ({ selectedId, handleSelect }) => (
               style={{
                 fontSize: RFValue(10),
                 color: isFocused ? COLORS.white : COLORS.lightText,
-                fontWeight: "600",
+                fontFamily: "Montserrat_600",
               }}
             >
               {item.day}
@@ -194,8 +202,8 @@ const CalendarDayScroller = ({ selectedId, handleSelect }) => (
               style={{
                 fontSize: RFValue(16),
                 color: isFocused ? COLORS.white : COLORS.darkText, // Changed to darkText for inactive dates to match image
-                fontWeight: "bold",
                 marginTop: RFValue(3),
+                fontFamily: "Montserrat_600",
               }}
             >
               {item.date}
@@ -249,9 +257,8 @@ const BookingCard = ({ data }) => {
         <Text
           style={{
             color: COLORS.white,
-            fontWeight: "bold",
             fontSize: RFValue(9),
-            letterSpacing: 0.5,
+            fontFamily: "Montserrat_600",
           }}
         >
           {status}
@@ -262,41 +269,66 @@ const BookingCard = ({ data }) => {
       <View style={{ padding: RFValue(15) }}>
         <Text
           style={{
-            fontSize: RFValue(15),
-            fontWeight: "bold",
+            fontSize: RFValue(14),
             color: COLORS.darkText,
-            marginBottom: RFValue(5),
+            marginBottom: RFValue(2),
+            fontFamily: "Montserrat_600",
           }}
         >
           {title}
         </Text>
-        
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: 'flex-start' }}>
-          <View style={{flexDirection:'column', flex: 1, marginRight: RFValue(10)}}>
+
+        <View
+          style={{
+            borderWidth: 1,
+            width: "100%",
+            borderColor: "rgb(224,237,233)",
+            marginVertical: RFValue(5),
+          }}
+        />
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              flex: 1,
+              marginRight: RFValue(10),
+            }}
+          >
             <Text
               style={{
-                fontSize: RFValue(13),
+                fontSize: RFValue(11),
                 color: COLORS.darkText,
                 fontWeight: "600",
                 marginBottom: RFValue(2),
+                fontFamily: "Montserrat_500",
               }}
             >
               {meetingDetail}
             </Text>
             <Text
               style={{
-                fontSize: RFValue(11),
+                fontSize: RFValue(10),
                 color: COLORS.darkText,
-                marginTop:RFValue(5)
+                marginTop: RFValue(5),
+                fontFamily: "Montserrat_500",
               }}
             >
               {date}
             </Text>
             <Text
               style={{
-                fontSize: RFValue(11),
+                fontSize: RFValue(10),
                 color: COLORS.lightText,
+                marginTop: RFValue(5),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_500",
               }}
             >
               {Time}
@@ -313,26 +345,23 @@ const BookingCard = ({ data }) => {
           >
             {/* View Icon (Eye) */}
             <TouchableOpacity style={{ padding: RFValue(5) }}>
-              <FontAwesome
-                name="eye"
-                size={RFValue(18)}
-                color={COLORS.lightText}
+              <Image
+                source={IMAGES.Eye}
+                style={{ height: RFValue(17), width: RFValue(17) }}
               />
             </TouchableOpacity>
 
             {/* Delete Icon (Trash) */}
             <TouchableOpacity
-              style={{ marginLeft: RFValue(15), padding: RFValue(5) }}
+              style={{ marginLeft: RFValue(10), padding: RFValue(5) }}
             >
-              <FontAwesome
-                name="trash-o"
-                size={RFValue(18)}
-                color={COLORS.lightText}
+              <Image
+                source={IMAGES.Trash}
+                style={{ height: RFValue(17), width: RFValue(17) }}
               />
             </TouchableOpacity>
           </View>
         </View>
-
       </View>
     </View>
   );
@@ -376,7 +405,7 @@ const CustomDropdown = ({ data, selectedValue, onSelect, onClose }) => (
               fontSize: RFValue(12),
               color:
                 item === selectedValue ? COLORS.primaryBlue : COLORS.darkText,
-              fontWeight: item === selectedValue ? "bold" : "normal",
+              fontFamily: item === selectedValue ?"Montserrat_700":"Montserrat_400",
             }}
           >
             {item}
@@ -394,7 +423,7 @@ export default function ViewBookings() {
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR.toString());
   const [isMonthDropdownOpen, setIsMonthDropdownOpen] = useState(false);
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('all'); // New state for filter tabs
+  const [selectedFilter, setSelectedFilter] = useState("all"); // New state for filter tabs
 
   const handleSelectDay = (id) => {
     setSelectedDayId(id);
@@ -407,12 +436,11 @@ export default function ViewBookings() {
   const handleYearSelect = (year) => {
     setSelectedYear(year);
   };
-  
-  const handleSelectFilter = (filter) => {
-      setSelectedFilter(filter);
-      // Logic to filter BOOKING_DATA would go here
-  };
 
+  const handleSelectFilter = (filter) => {
+    setSelectedFilter(filter);
+    // Logic to filter BOOKING_DATA would go here
+  };
 
   const toggleMonthDropdown = () => {
     setIsMonthDropdownOpen(!isMonthDropdownOpen);
@@ -425,10 +453,10 @@ export default function ViewBookings() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.backgroundGrey }}>
+    <View style={{ flex: 1, backgroundColor: "rgb(240,242,246)" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* --- Header --- */}
-        <View
+        <TouchableOpacity
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -436,164 +464,161 @@ export default function ViewBookings() {
             backgroundColor: COLORS.white,
             borderBottomWidth: 1,
             borderBottomColor: COLORS.mediumGrey,
-            paddingTop: RFPercentage(8), 
+            paddingTop: RFPercentage(8),
           }}
+          onPress={() => router.back()}
         >
-          <TouchableOpacity onPress={() => router.back()}> 
+          <View >
             {/* Replace console.log with router.back() if using expo-router */}
             <Ionicons
               name="chevron-back"
-              size={RFValue(24)}
+              size={RFValue(22)}
               color={COLORS.darkText}
             />
-          </TouchableOpacity>
+          </View>
           <Text
             style={{
               fontSize: RFValue(16),
               fontWeight: "600",
               color: COLORS.darkText,
               marginLeft: RFValue(15),
+              fontFamily:'Montserrat_500'
             }}
           >
             View Bookings
           </Text>
-        </View>
+        </TouchableOpacity>
 
         {/* --- Month & Year Dropdowns Container --- */}
         <View
           style={{
-            backgroundColor: COLORS.cardGrey, // Changed background to white/cardGrey
-            paddingTop: RFValue(20), // Added top padding for spacing from header
+            backgroundColor: "rgb(240,242,246)",
+            paddingTop: RFValue(15),
+            borderRadius: RFValue(12),
           }}
         >
-            <View
+          <View
             style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              backgroundColor: COLORS.white,
+              marginHorizontal: RFValue(20),
+              borderRadius: RFValue(14),
+              paddingHorizontal: RFValue(20),
+              paddingVertical: RFValue(14),
+            }}
+          >
+            {/* Month Dropdown */}
+            <TouchableOpacity
+              onPress={toggleMonthDropdown}
+              style={{
                 flexDirection: "row",
                 alignItems: "center",
-                paddingHorizontal: RFValue(20),
-                // marginTop: RFValue(20), // Removed as top padding is on parent view
-                zIndex: 1,
-                justifyContent: "space-between",
-            }}
+                paddingRight: RFValue(10),
+                zIndex: isMonthDropdownOpen ? 2 : 1,
+              }}
             >
-                {/* Month Dropdown Area */}
-                <View
-                    style={{
-                    // width: '48%', // Flexible width
-                    flex: 1,
-                    marginRight: RFValue(10),
-                    // position: "relative", // Let dropdown handle its own relative positioning inside
-                    zIndex: isMonthDropdownOpen ? 2 : 1,
-                    }}
-                >
-                    <TouchableOpacity
-                    onPress={toggleMonthDropdown}
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        backgroundColor: COLORS.cardGrey,
-                        paddingVertical: RFValue(8),
-                        paddingHorizontal: RFValue(15),
-                        borderRadius: RFValue(8),
-                        borderWidth: 1,
-                        borderColor: COLORS.mediumGrey,
-                        justifyContent: 'space-between'
-                    }}
-                    >
-                    <Text
-                        style={{
-                        color: COLORS.darkText,
-                        fontWeight: "600",
-                        fontSize: RFValue(12),
-                        }}
-                    >
-                        {selectedMonth}
-                    </Text>
-                    <AntDesign
-                        name="down"
-                        size={RFValue(12)}
-                        color={COLORS.darkText}
-                        style={{ marginLeft: RFValue(5), top: 1 }}
-                    />
-                    </TouchableOpacity>
+              <Text
+                style={{
+                  color: COLORS.darkText,
+                  fontWeight: "600",
+                  fontSize: RFValue(14),
+                }}
+              >
+                {selectedMonth}
+              </Text>
+              <AntDesign
+                name="down"
+                size={RFValue(12)}
+                color={COLORS.darkText}
+                style={{ marginLeft: RFValue(6) }}
+              />
+            </TouchableOpacity>
 
-                    {isMonthDropdownOpen && (
-                    <CustomDropdown
-                        data={MONTHS}
-                        selectedValue={selectedMonth}
-                        onSelect={handleMonthSelect}
-                        onClose={() => setIsMonthDropdownOpen(false)}
-                    />
-                    )}
-                </View>
+            {/* Year Dropdown */}
+            <TouchableOpacity
+              onPress={toggleYearDropdown}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingLeft: RFValue(10),
+                zIndex: isYearDropdownOpen ? 2 : 1,
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.darkText,
+                  fontWeight: "600",
+                  fontSize: RFValue(14),
+                }}
+              >
+                {selectedYear}
+              </Text>
+              <AntDesign
+                name="down"
+                size={RFValue(12)}
+                color={COLORS.darkText}
+                style={{ marginLeft: RFValue(6) }}
+              />
+            </TouchableOpacity>
+          </View>
 
-                {/* Year Dropdown Area */}
-                <View
-                    style={{
-                    // width: '48%', // Flexible width
-                    flex: 1,
-                    // position: "relative", // Let dropdown handle its own relative positioning inside
-                    zIndex: isYearDropdownOpen ? 2 : 1,
-                    }}
-                >
-                    <TouchableOpacity
-                    onPress={toggleYearDropdown}
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        backgroundColor: COLORS.cardGrey,
-                        paddingVertical: RFValue(8),
-                        paddingHorizontal: RFValue(15),
-                        borderRadius: RFValue(8),
-                        borderWidth: 1,
-                        borderColor: COLORS.mediumGrey,
-                        justifyContent: 'space-between'
-                    }}
-                    >
-                    <Text
-                        style={{
-                        color: COLORS.darkText,
-                        fontWeight: "600",
-                        fontSize: RFValue(12),
-                        }}
-                    >
-                        {selectedYear}
-                    </Text>
-                    <AntDesign
-                        name="down"
-                        size={RFValue(12)}
-                        color={COLORS.darkText}
-                        style={{ marginLeft: RFValue(5), top: 1 }}
-                    />
-                    </TouchableOpacity>
-
-                    {isYearDropdownOpen && (
-                    <CustomDropdown
-                        data={YEAR_RANGE.map(String)} 
-                        selectedValue={selectedYear}
-                        onSelect={handleYearSelect}
-                        onClose={() => setIsYearDropdownOpen(false)}
-                    />
-                    )}
-                </View>
+          {/* Month Dropdown List */}
+          {isMonthDropdownOpen && (
+            <View
+              style={{
+                position: "absolute",
+                top: RFValue(30),
+                left: RFValue(20),
+                right: RFPercentage(25),
+                zIndex: 2,
+              }}
+            >
+              <CustomDropdown
+                data={MONTHS}
+                selectedValue={selectedMonth}
+                onSelect={handleMonthSelect}
+                onClose={() => setIsMonthDropdownOpen(false)}
+              />
             </View>
+          )}
 
-            {/* --- Calendar Week View --- */}
-            <CalendarDayScroller
-                selectedId={selectedDayId}
-                handleSelect={handleSelectDay}
-            />
-
-            {/* --- Filter Buttons (New Section) --- */}
-            <BookingFilterTabs
-                selectedFilter={selectedFilter}
-                onSelectFilter={handleSelectFilter}
-            />
-
+          {/* Year Dropdown List */}
+          {isYearDropdownOpen && (
+            <View
+              style={{
+                position: "absolute",
+                top: RFValue(30),
+                right: RFValue(20),
+                width: "40%",
+                zIndex: 2,
+              }}
+            >
+              <CustomDropdown
+                data={YEAR_RANGE.map(String)}
+                selectedValue={selectedYear}
+                onSelect={handleYearSelect}
+                onClose={() => setIsYearDropdownOpen(false)}
+              />
+            </View>
+          )}
         </View>
 
+        {/* --- Calendar Week View --- */}
+        <CalendarDayScroller
+          selectedId={selectedDayId}
+          handleSelect={handleSelectDay}
+        />
+
+        {/* --- Filter Buttons (New Section) --- */}
+        <BookingFilterTabs
+          selectedFilter={selectedFilter}
+          onSelectFilter={handleSelectFilter}
+        />
+
         {/* --- Booking Cards List --- */}
-        <View style={{ marginTop: RFValue(5),marginBottom:RFPercentage(15) }}>
+        <View style={{ marginTop: RFValue(5), marginBottom: RFPercentage(15) }}>
           {BOOKING_DATA.map((item) => (
             <BookingCard key={item.id} data={item} />
           ))}

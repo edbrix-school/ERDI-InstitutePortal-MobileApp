@@ -12,12 +12,13 @@ import {
   Modal,
   Switch,
   TouchableWithoutFeedback,
+  RefreshControl,
 } from "react-native";
 
 import React, { useState } from "react";
 import * as IMAGES from "../../../components/Images";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
@@ -89,13 +90,40 @@ const SCHEDULE_DATA = [
     location: "Salt Lake City, Utah",
   },
 ];
-
-const ICON_IMAGES = {
-  Google: {
-    uri: "https://via.placeholder.com/50x50/F4F4F4/444444?text=Google",
+const EVENTS = [
+  {
+    id: "1",
+    title: "Summer Institute 2024",
+    location: "Salt Lake City, Utah",
+    time: "09:00 - 09:30",
+    type: "Online",
+    image: IMAGES.Event1,
   },
-  MS365: { uri: "https://via.placeholder.com/50x50/F4F4F4/444444?text=MS365" },
-};
+  {
+    id: "2",
+    title: "Spring Thought  2024",
+    location: "Sunnydale, California",
+    time: "09:00 - 09:30",
+    type: "In-person",
+    image: IMAGES.Event2,
+  },
+  {
+    id: "3",
+    title: "Global Health Summit",
+    location: "New York City, NY",
+    time: "10:00 - 11:00",
+    type: "Hybrid",
+    image: IMAGES.Event1, // Add image in IMAGES file
+  },
+  {
+    id: "4",
+    title: "Education Leaders Forum",
+    location: "Chicago, Illinois",
+    time: "14:00 - 15:30",
+    type: "Online",
+    image: IMAGES.Event2, // Add image in IMAGES file
+  },
+];
 
 const CALENDAR_GRID = [
   { day: "S", date: 1, isSelected: false },
@@ -136,7 +164,7 @@ const CALENDAR_GRID = [
 ];
 
 const CalendarGrid = () => (
-  <View style={{ marginBottom: RFValue(20), paddingHorizontal: RFValue(15) }}>
+  <View style={{ paddingHorizontal: RFValue(15) }}>
     {/* Day Headers (S, M, T, W, T, F, S) */}
     <View
       style={{
@@ -151,9 +179,9 @@ const CalendarGrid = () => (
           style={{
             width: width / 9.5,
             textAlign: "center",
-            fontSize: RFValue(12),
+            fontSize: RFValue(10),
             color: COLORS.darkText,
-            fontWeight: "bold",
+            fontFamily: "Montserrat_500",
           }}
         >
           {day}
@@ -203,9 +231,9 @@ const CalendarGrid = () => (
               >
                 <Text
                   style={{
-                    fontSize: RFValue(12),
-                    fontWeight: "600",
+                    fontSize: RFValue(10),
                     color: isSelected ? COLORS.white : COLORS.darkText,
+                    fontFamily: "Montserrat_500",
                   }}
                 >
                   {date}
@@ -252,7 +280,7 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             borderTopRightRadius: RFValue(25),
             paddingTop: RFValue(15),
             paddingBottom: RFValue(30),
-            maxHeight: "90%",
+            maxHeight: "70%",
           }}
           activeOpacity={1}
           onPress={() => {
@@ -275,11 +303,12 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             {/* Title */}
             <Text
               style={{
-                fontSize: RFValue(18),
-                fontWeight: "bold",
+                fontSize: RFValue(14),
                 color: COLORS.darkText,
                 paddingHorizontal: RFValue(20),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_600",
+                marginTop: RFValue(10),
               }}
             >
               Set Availability
@@ -290,6 +319,7 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
               style={{
                 paddingHorizontal: RFValue(20),
                 marginBottom: RFValue(20),
+                marginTop: RFValue(10),
               }}
             >
               <TouchableOpacity
@@ -305,19 +335,26 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   borderColor: COLORS.separator,
                 }}
               >
-                <Text style={{ fontSize: RFValue(14), color: COLORS.darkText }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(11),
+                    color: COLORS.darkText,
+                    fontFamily: "Montserrat_400",
+                  }}
+                >
                   Select Convenings
                 </Text>
                 <AntDesign
                   name="down"
-                  size={RFValue(16)}
+                  size={RFValue(14)}
                   color={COLORS.lightText}
+                  style={{ top: 2 }}
                 />
               </TouchableOpacity>
             </View>
 
             {/* Month/Year Navigation and Calendar */}
-            <View style={{ marginBottom: RFValue(15) }}>
+            <View style={{ marginBottom: RFValue(0) }}>
               <View
                 style={{
                   flexDirection: "row",
@@ -328,21 +365,21 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                 }}
               >
                 {/* Month/Year Text */}
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row", marginBottom: 10 }}>
                   <Text
                     style={{
-                      fontSize: RFValue(16),
-                      fontWeight: "bold",
+                      fontSize: RFValue(12),
                       color: COLORS.darkText,
                       marginRight: RFValue(5),
+                      fontFamily: "Montserrat_500",
                     }}
                   >
                     September
                   </Text>
                   <Text
                     style={{
-                      fontSize: RFValue(16),
-                      fontWeight: "bold",
+                      fontSize: RFValue(12),
+                      fontFamily: "Montserrat_500",
                       color: COLORS.darkText,
                     }}
                   >
@@ -351,11 +388,13 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                 </View>
 
                 {/* Arrows */}
-                <View style={{ flexDirection: "row" }}>
+                <View
+                  style={{ flexDirection: "row", marginBottom: RFValue(10) }}
+                >
                   <TouchableOpacity style={{ padding: RFValue(5) }}>
                     <AntDesign
                       name="left"
-                      size={RFValue(18)}
+                      size={RFValue(12)}
                       color={COLORS.darkText}
                     />
                   </TouchableOpacity>
@@ -364,7 +403,7 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   >
                     <AntDesign
                       name="right"
-                      size={RFValue(18)}
+                      size={RFValue(12)}
                       color={COLORS.darkText}
                     />
                   </TouchableOpacity>
@@ -388,11 +427,12 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             {/* Appointment Duration */}
             <Text
               style={{
-                fontSize: RFValue(16),
+                fontSize: RFValue(12),
                 fontWeight: "bold",
                 color: COLORS.darkText,
                 paddingHorizontal: RFValue(20),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_600",
               }}
             >
               Appointment Duration
@@ -416,7 +456,13 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   borderColor: COLORS.separator,
                 }}
               >
-                <Text style={{ fontSize: RFValue(14), color: COLORS.darkText }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(10),
+                    color: COLORS.darkText,
+                    fontFamily: "Montserrat_500",
+                  }}
+                >
                   30 Minutes
                 </Text>
                 <AntDesign
@@ -430,11 +476,11 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             {/* General Availability */}
             <Text
               style={{
-                fontSize: RFValue(16),
-                fontWeight: "bold",
+                fontSize: RFValue(12),
                 color: COLORS.darkText,
                 paddingHorizontal: RFValue(20),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_600",
               }}
             >
               General Availability
@@ -452,22 +498,21 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   justifyContent: "center",
                   paddingVertical: RFValue(10),
                   paddingHorizontal: RFValue(15),
-                  backgroundColor: COLORS.boxGrey,
+                  backgroundColor: "rgb(238,253,255)",
                   borderRadius: RFValue(10),
-                  borderWidth: 1,
-                  borderColor: COLORS.separator,
                 }}
               >
                 <Ionicons
                   name="add-circle-outline"
-                  size={RFValue(18)}
-                  color={COLORS.modalDarkTeal}
+                  size={RFValue(14)}
+                  color={"rgb(87,148,174)"}
                 />
                 <Text
                   style={{
-                    fontSize: RFValue(14),
-                    color: COLORS.modalDarkTeal,
+                    fontSize: RFValue(10),
+                    color: "rgb(87,148,174)",
                     marginLeft: RFValue(5),
+                    fontFamily: "Montserrat_600",
                   }}
                 >
                   Set Time Slot
@@ -478,11 +523,11 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             {/* Scheduling Window */}
             <Text
               style={{
-                fontSize: RFValue(16),
-                fontWeight: "bold",
+                fontSize: RFValue(12),
                 color: COLORS.darkText,
                 paddingHorizontal: RFValue(20),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_600",
               }}
             >
               Scheduling Window
@@ -496,9 +541,10 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             >
               <Text
                 style={{
-                  fontSize: RFValue(12),
+                  fontSize: RFValue(10),
                   color: COLORS.lightText,
-                  marginBottom: RFValue(5),
+                  marginBottom: RFValue(15),
+                  fontFamily: "Montserrat_400",
                 }}
               >
                 Maximum time in advance that an appointment can be booked
@@ -516,12 +562,18 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   borderColor: COLORS.separator,
                 }}
               >
-                <Text style={{ fontSize: RFValue(14), color: COLORS.darkText }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(12),
+                    color: COLORS.darkText,
+                    fontFamily: "Montserrat_400",
+                  }}
+                >
                   7 Days
                 </Text>
                 <AntDesign
                   name="down"
-                  size={RFValue(16)}
+                  size={RFValue(12)}
                   color={COLORS.lightText}
                 />
               </TouchableOpacity>
@@ -535,9 +587,10 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
             >
               <Text
                 style={{
-                  fontSize: RFValue(12),
+                  fontSize: RFValue(10),
                   color: COLORS.lightText,
-                  marginBottom: RFValue(5),
+                  marginBottom: RFValue(10),
+                  fontFamily: "Montserrat_400",
                 }}
               >
                 Minimum time before the appointment that it can be booked
@@ -555,12 +608,18 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                   borderColor: COLORS.separator,
                 }}
               >
-                <Text style={{ fontSize: RFValue(14), color: COLORS.darkText }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(10),
+                    color: COLORS.darkText,
+                    fontFamily: "Montserrat_400",
+                  }}
+                >
                   12 Hours
                 </Text>
                 <AntDesign
                   name="down"
-                  size={RFValue(16)}
+                  size={RFValue(12)}
                   color={COLORS.lightText}
                 />
               </TouchableOpacity>
@@ -573,44 +632,42 @@ const SetAvailabilityModal = ({ isVisible, onClose }) => {
                 alignItems: "center",
                 paddingHorizontal: RFValue(20),
                 justifyContent: "space-between",
-                marginBottom: RFValue(30),
+                marginBottom: RFPercentage(30),
               }}
             >
-              <Text style={{ fontSize: RFValue(14), color: COLORS.darkText }}>
-                Allow multiple bookings
-              </Text>
-              <Switch
-                trackColor={{
-                  false: COLORS.lightGrey,
-                  true: COLORS.modalDarkTeal,
-                }}
-                thumbColor={allowMultiple ? COLORS.white : COLORS.white}
-                onValueChange={setAllowMultiple}
-                value={allowMultiple}
-              />
-            </View>
-
-            {/* Done Button (Matches the style of Save Draft in the main screen) */}
-            <TouchableOpacity
-              onPress={onClose}
-              style={{
-                backgroundColor: COLORS.modalDarkTeal,
-                paddingVertical: RFValue(12),
-                marginHorizontal: RFValue(20),
-                borderRadius: RFValue(10),
-                alignItems: "center",
-              }}
-            >
-              <Text
+              <TouchableOpacity
+                onPress={() => setAllowMultiple(!allowMultiple)}
                 style={{
-                  color: COLORS.white,
-                  fontSize: RFValue(16),
-                  fontWeight: "bold",
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                Done
-              </Text>
-            </TouchableOpacity>
+                {allowMultiple ? (
+                  <Feather
+                    name={"square"}
+                    size={RFValue(20)}
+                    color={COLORS.mediumGrey}
+                    style={{ marginRight: RFValue(10) }}
+                  />
+                ) : (
+                  <AntDesign
+                    name={"check-square"}
+                    size={RFValue(20)}
+                    style={{ marginRight: RFValue(10) }}
+                  />
+                )}
+
+                <Text
+                  style={{
+                    fontSize: RFValue(12),
+                    color: COLORS.darkText,
+                    fontFamily: "Montserrat_400",
+                  }}
+                >
+                  Allow multiple bookings
+                </Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </TouchableOpacity>
       </TouchableOpacity>
@@ -622,6 +679,16 @@ export default function Schedule() {
   const [selectedId, setSelectedId] = useState("3");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    // ✅ Add your refresh API logic here
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  };
   const router = useRouter();
 
   const handleSelect = (id) => {
@@ -728,10 +795,11 @@ export default function Schedule() {
                 {/* Title */}
                 <Text
                   style={{
-                    fontSize: RFValue(18),
+                    fontSize: RFValue(14),
                     fontWeight: "bold",
                     color: COLORS.darkText,
-                    marginBottom: RFValue(30),
+                    marginBottom: RFValue(20),
+                    fontFamily: "Montserrat_600",
                   }}
                 >
                   Select A Calendar
@@ -748,17 +816,12 @@ export default function Schedule() {
                   <TouchableOpacity
                     style={{
                       flex: 1,
-                      backgroundColor: MODAL_COLORS.cardBg,
-                      borderRadius: RFValue(15),
-                      padding: RFValue(10),
+                      backgroundColor: 'rgb(245,246,247)',
+                      borderRadius: RFValue(10),
                       alignItems: "center",
                       justifyContent: "center",
-                      elevation: 5,
-                      shadowColor: "#000",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.1,
-                      shadowRadius: 3.84,
-                      margin: RFPercentage(2),
+                      marginRight:RFValue(10),
+                      paddingVertical:RFValue(15)
                     }}
                     onPress={() => {
                       onClose();
@@ -767,17 +830,18 @@ export default function Schedule() {
                     <Image
                       source={IMAGES.GoogleCalender}
                       style={{
-                        width: RFValue(40),
-                        height: RFValue(40),
+                        width: RFValue(30),
+                        height: RFValue(30),
                         marginBottom: RFValue(10),
                       }}
                       resizeMode="contain"
                     />
                     <Text
                       style={{
-                        fontSize: RFValue(12),
+                        fontSize: RFValue(10),
                         fontWeight: "400",
                         color: COLORS.darkText,
+                        fontFamily: "Montserrat_400",
                       }}
                     >
                       Google Calendar
@@ -786,19 +850,13 @@ export default function Schedule() {
 
                   {/* MS 365 Calendar Card */}
                   <TouchableOpacity
-                    style={{
+                     style={{
                       flex: 1,
-                      backgroundColor: MODAL_COLORS.cardBg,
-                      borderRadius: RFValue(15),
-                      padding: RFValue(20),
+                      backgroundColor: 'rgb(245,246,247)',
+                      borderRadius: RFValue(10),
                       alignItems: "center",
                       justifyContent: "center",
-                      elevation: 5,
-                      shadowColor: "#000",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.1,
-                      shadowRadius: 3.84,
-                      margin: RFPercentage(2),
+                      paddingVertical:RFValue(15)
                     }}
                     onPress={() => {
                       console.log("MS 365 Calendar Selected");
@@ -808,17 +866,18 @@ export default function Schedule() {
                     <Image
                       source={IMAGES.Microsoft}
                       style={{
-                        width: RFValue(50),
-                        height: RFValue(50),
+                        width: RFValue(30),
+                        height: RFValue(30),
                         marginBottom: RFValue(10),
                       }}
                       resizeMode="contain"
                     />
                     <Text
                       style={{
-                        fontSize: RFValue(12),
+                        fontSize: RFValue(10),
                         fontWeight: "400",
                         color: COLORS.darkText,
+                        fontFamily: "Montserrat_400",
                       }}
                     >
                       MS 365 Calendar
@@ -833,16 +892,16 @@ export default function Schedule() {
     );
   };
   const ScheduleCard = ({ data }) => {
-    const { status, statusColor, title, description, time, location } = data;
+    const { status, title, description, time, location } = data;
 
     const getStatusBackgroundColor = (status) => {
       switch (status) {
         case "CONFIRMED":
-          return COLORS.confirmedGreen;
+          return "rgb(84,131,83)";
         case "PENDING":
-          return COLORS.pendingOrange;
+          return "rgb(183,133,87)";
         case "CANCELLED":
-          return COLORS.cancelledRed;
+          return "rgb(114,145,164)";
         default:
           return COLORS.lightGrey;
       }
@@ -855,8 +914,8 @@ export default function Schedule() {
           borderRadius: RFValue(12),
           marginHorizontal: RFValue(15),
           marginBottom: RFValue(20),
-          overflow: "hidden",
           elevation: 4,
+          overflow: "hidden",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.1,
@@ -880,9 +939,8 @@ export default function Schedule() {
             <Text
               style={{
                 color: COLORS.white,
-                fontWeight: "bold",
                 fontSize: RFValue(10),
-                letterSpacing: 0.5,
+                fontFamily: "Montserrat_600",
               }}
             >
               {status}
@@ -897,16 +955,17 @@ export default function Schedule() {
                 fontWeight: "bold",
                 color: COLORS.darkText,
                 marginBottom: RFValue(5),
+                fontFamily: "Montserrat_600",
               }}
             >
               {title}
             </Text>
             <Text
               style={{
-                fontSize: RFValue(11),
+                fontSize: RFValue(10),
                 color: COLORS.lightText,
-                lineHeight: RFValue(18),
                 marginBottom: RFValue(10),
+                fontFamily: "Montserrat_400",
               }}
               numberOfLines={2}
             >
@@ -932,6 +991,7 @@ export default function Schedule() {
                     marginLeft: RFValue(5),
                     fontSize: RFValue(10),
                     color: COLORS.darkText,
+                    fontFamily: "Montserrat_400",
                   }}
                 >
                   {time}
@@ -949,6 +1009,7 @@ export default function Schedule() {
                     fontSize: RFValue(10),
                     color: COLORS.darkText,
                     flexShrink: 1,
+                    fontFamily: "Montserrat_400",
                   }}
                 >
                   {location}
@@ -990,7 +1051,7 @@ export default function Schedule() {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.bottomActions}>
+          <View style={[styles.bottomActions, { paddingBottom: RFValue(10) }]}>
             <TouchableOpacity style={styles.editButton}>
               <Feather name="edit" size={22} color="gray" />
             </TouchableOpacity>
@@ -1042,7 +1103,12 @@ export default function Schedule() {
         />
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {/* --- Header/Background Section --- */}
         <ImageBackground
           source={IMAGES.ScheduleBg}
@@ -1060,6 +1126,7 @@ export default function Schedule() {
                 color: COLORS.white,
                 marginTop: 15,
                 marginBottom: 10,
+                fontFamily: "Montserrat_500",
               }}
             >
               Schedule
@@ -1073,6 +1140,7 @@ export default function Schedule() {
                 color: COLORS.white,
                 marginBottom: 15,
                 marginTop: RFValue(10),
+                fontFamily: "Montserrat_400",
               }}
             >
               Your events
@@ -1086,152 +1154,94 @@ export default function Schedule() {
               showsHorizontalScrollIndicator={false}
               style={{ marginBottom: 20 }}
             >
-              {/* --- Event Card 1 (Current/Live) --- */}
-              <View
-                style={{
-                  width: width * 0.8,
-                  marginRight: 15,
-                  backgroundColor: COLORS.cardBackground,
-                  borderRadius: 15,
-                  overflow: "hidden",
-                  elevation: 5,
-                  shadowColor: "#000",
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 3.84,
-                }}
-              >
-                <View>
+              {EVENTS.map((event) => (
+                <View
+                  key={event.id}
+                  style={{
+                    width: width * 0.6,
+                    marginRight: 15,
+                    backgroundColor: COLORS.cardBackground,
+                    borderRadius: 15,
+                    overflow: "hidden",
+                    elevation: 5,
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 3.84,
+                  }}
+                >
                   {/* Background Image */}
                   <Image
-                    source={IMAGES.Event1}
+                    source={event.image}
                     style={{ width: "100%", height: RFValue(100) }}
                   />
-                </View>
 
-                <View style={{ padding: RFValue(12) }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: COLORS.darkText,
-                      marginBottom: 5,
-                    }}
-                  >
-                    Summer Institute 2024
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: COLORS.lightText,
-                      marginBottom: 10,
-                    }}
-                  >
-                    Salt Lake City, Utah
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text style={{ fontSize: 14, color: COLORS.darkText }}>
-                      09:00 - 09:30
-                    </Text>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
+                  <View style={{ padding: RFValue(12) }}>
+                    <Text
+                      style={{
+                        color: COLORS.darkText,
+                        marginBottom: 5,
+                        fontSize: RFValue(12),
+                        fontFamily: "Montserrat_700",
+                      }}
                     >
-                      <View
+                      {event.title}
+                    </Text>
+
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: COLORS.lightText,
+                        marginBottom: 10,
+                        fontFamily: "Montserrat_400",
+                      }}
+                    >
+                      {event.location}
+                    </Text>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
                         style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: 3,
-                          backgroundColor: COLORS.lightText,
-                          marginHorizontal: 10,
+                          fontSize: 14,
+                          color: COLORS.darkText,
+                          fontFamily: "Montserrat_400",
                         }}
-                      />
-                      <Text style={{ fontSize: 14, color: COLORS.darkText }}>
-                        Online
+                      >
+                        {event.time}
                       </Text>
+
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <View
+                          style={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: 3,
+                            backgroundColor: COLORS.lightText,
+                            marginHorizontal: 10,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            fontSize: 14,
+                            color: COLORS.darkText,
+                            fontFamily: "Montserrat_400",
+                          }}
+                        >
+                          {event.type}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-
-              {/* --- Event Card 2 (Upcoming/Past) --- */}
-              <View
-                style={{
-                  width: width * 0.8,
-                  marginRight: 15,
-                  backgroundColor: COLORS.cardBackground,
-                  borderRadius: 15,
-                  overflow: "hidden",
-                  elevation: 5,
-                  shadowColor: "#000",
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 3.84,
-                }}
-              >
-                <View>
-                  {/* Background Image */}
-                  <Image
-                    source={IMAGES.Event2}
-                    style={{ width: "100%", height: RFValue(100) }}
-                  />
-                </View>
-
-                <View style={{ padding: RFValue(12) }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: "bold",
-                      color: COLORS.darkText,
-                      marginBottom: 5,
-                    }}
-                  >
-                    Spring Thought Symposium 2024
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: COLORS.lightText,
-                      marginBottom: 10,
-                    }}
-                  >
-                    Sunnydale, California
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text style={{ fontSize: 14, color: COLORS.darkText }}>
-                      09:00 - 09:30
-                    </Text>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <View
-                        style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: 3,
-                          backgroundColor: COLORS.lightText,
-                          marginHorizontal: 10,
-                        }}
-                      />
-                      <Text style={{ fontSize: 14, color: COLORS.darkText }}>
-                        In-person
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              {/* Add more cards here if needed */}
+              ))}
             </ScrollView>
           </View>
         </ImageBackground>
@@ -1242,7 +1252,7 @@ export default function Schedule() {
             justifyContent: "space-between",
             paddingBottom: RFValue(30),
             paddingHorizontal: RFValue(20),
-            backgroundColor: "rgb(241,242,246)",
+            backgroundColor: "rgb(241,243,246)",
             paddingTop: RFValue(20),
           }}
         >
@@ -1279,7 +1289,7 @@ export default function Schedule() {
               <Image
                 source={IMAGES.Eye}
                 resizeMode="contain"
-                style={{ height: RFValue(20), width: RFValue(20) }}
+                style={{ height: RFValue(16), width: RFValue(16) }}
               />
             </View>
             <Text
@@ -1287,6 +1297,7 @@ export default function Schedule() {
                 color: COLORS.darkText,
                 fontWeight: "600",
                 fontSize: RFValue(10),
+                fontFamily: "Montserrat_400",
               }}
             >
               View Bookings
@@ -1325,14 +1336,14 @@ export default function Schedule() {
               <Image
                 source={IMAGES.Calender}
                 resizeMode="contain"
-                style={{ height: RFValue(20), width: RFValue(20) }}
+                style={{ height: RFValue(16), width: RFValue(16) }}
               />
             </View>
             <Text
               style={{
                 color: COLORS.darkText,
-                fontWeight: "600",
                 fontSize: RFValue(10),
+                fontFamily: "Montserrat_400",
               }}
             >
               Set Availability
@@ -1344,10 +1355,10 @@ export default function Schedule() {
         <View
           style={{
             marginBottom: RFValue(20),
-            paddingTop: RFValue(20),
+            paddingTop: RFValue(10),
             backgroundColor: "rgb(241,242,246)",
 
-            paddingBottom: RFPercentage(20),
+            paddingBottom: RFPercentage(16),
           }}
         >
           <View
@@ -1363,6 +1374,7 @@ export default function Schedule() {
                 fontSize: 18,
                 fontWeight: "600",
                 color: COLORS.darkText,
+                fontFamily: "Montserrat_400",
               }}
             >
               My Schedule
@@ -1382,8 +1394,9 @@ export default function Schedule() {
               alignItems: "center",
               marginTop: RFValue(15),
               justifyContent: "space-between",
-              backgroundColor: "rgb(241,242,246)",
-              paddingHorizontal: RFValue(20),
+              backgroundColor: "#fff",
+              marginHorizontal: RFValue(20),
+              borderRadius: 10,
             }}
           >
             {/* Month Dropdown */}
@@ -1399,13 +1412,19 @@ export default function Schedule() {
                 marginRight: RFValue(10),
               }}
             >
-              <Text style={{ color: COLORS.darkText, fontWeight: "600" }}>
+              <Text
+                style={{ color: COLORS.darkText, fontFamily: "Montserrat_600" }}
+              >
                 November
               </Text>
               <AntDesign
                 name="down"
                 size={15}
-                style={{ marginLeft: RFValue(5), top: 1 }}
+                style={{
+                  marginLeft: RFValue(5),
+                  top: 1,
+                  fontFamily: "Montserrat_400",
+                }}
               />
             </TouchableOpacity>
 
@@ -1416,18 +1435,24 @@ export default function Schedule() {
                 alignItems: "center",
                 backgroundColor: COLORS.white,
                 paddingVertical: 8,
-                paddingHorizontal: 15,
+                paddingHorizontal: RFValue(15),
                 borderRadius: 8,
                 borderColor: COLORS.lightGrey,
               }}
             >
-              <Text style={{ color: COLORS.darkText, fontWeight: "600" }}>
+              <Text
+                style={{
+                  color: COLORS.darkText,
+                  fontWeight: "600",
+                  fontFamily: "Montserrat_600",
+                }}
+              >
                 2024
               </Text>
               <AntDesign
                 name="down"
                 size={15}
-                style={{ marginLeft: RFValue(5), top: 1 }}
+                style={{ marginLeft: RFValue(10), top: 1 }}
               />
             </TouchableOpacity>
           </View>
@@ -1479,18 +1504,22 @@ const styles = StyleSheet.create({
     fontSize: RFValue(10),
     color: "#777",
     fontWeight: "600",
+    fontFamily: "Montserrat_500",
   },
   calendarDayTextFocused: {
     color: "white",
+    fontFamily: "Montserrat_600",
   },
   calendarDateText: {
     fontSize: RFValue(16),
     color: "#333",
     fontWeight: "bold",
     marginTop: RFValue(3),
+    fontFamily: "Montserrat_700",
   },
   calendarDateTextFocused: {
     color: "white",
+    fontFamily: "Montserrat_700",
   },
   bottomActions: {
     flexDirection: "row",
@@ -1511,10 +1540,10 @@ const styles = StyleSheet.create({
   saveDraftButton: {
     backgroundColor: "rgb(50,113,143)",
     borderRadius: 10,
-    flex: 1,
+    flex: 1.2,
     alignItems: "center",
     justifyContent: "center",
-    width: RFValue(50),
+    width: RFValue(60),
     height: RFValue(40),
     marginLeft: RFValue(10),
   },
@@ -1522,6 +1551,7 @@ const styles = StyleSheet.create({
     color: "#ffff",
     fontSize: RFValue(10),
     fontWeight: "400",
+    fontFamily: "Montserrat_500",
   },
   viewMoreButton: {
     backgroundColor: "#EBFEFF",
@@ -1537,5 +1567,6 @@ const styles = StyleSheet.create({
     color: "#077397",
     fontSize: RFValue(10),
     fontWeight: "400",
+    fontFamily: "Montserrat_400",
   },
 });

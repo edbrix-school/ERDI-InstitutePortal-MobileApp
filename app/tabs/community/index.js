@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -8,12 +8,19 @@ import {
   Image,
   Dimensions,
   ImageBackground,
+  RefreshControl,
 } from "react-native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import * as IMAGES from "../../../components/Images";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { AntDesign, Entypo, EvilIcons, Feather, MaterialIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  EvilIcons,
+  Feather,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const POST_CARD_WIDTH = width * 0.95;
@@ -54,7 +61,15 @@ const IconPlaceholder = ({ name, size = 20, color = "#333" }) => (
       alignItems: "center",
     }}
   >
-    <Text style={{ color: "white", fontSize: size * 0.6 }}>{name}</Text>
+    <Text
+      style={{
+        color: "white",
+        fontSize: size * 0.6,
+        fontFamily: "Montserrat_400",
+      }}
+    >
+      {name}
+    </Text>
   </View>
 );
 
@@ -71,7 +86,7 @@ const PostCard = ({
       backgroundColor: "white",
       borderRadius: 12,
       marginVertical: 10,
-      marginHorizontal: (width - POST_CARD_WIDTH) / 2,
+      paddingHorizontal: RFValue(10),
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
@@ -79,6 +94,7 @@ const PostCard = ({
       elevation: 5,
       width: POST_CARD_WIDTH,
       overflow: "hidden",
+
     }}
   >
     <View style={{ position: "relative" }}>
@@ -97,20 +113,15 @@ const PostCard = ({
           position: "absolute",
           top: 15,
           left: 15,
-          backgroundColor:
-            tag === "ISO"
-              ? "#007bff"
-              : tag === "Professional Learning"
-              ? "#ffc107"
-              : tag === "Artificial Intelligence"
-              ? "#28a745"
-              : "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(199,162,121)",
           paddingHorizontal: 12,
           paddingVertical: 4,
           borderRadius: 15,
         }}
       >
-        <Text style={{ color: "white", fontSize: 12, fontWeight: "bold" }}>
+        <Text
+          style={{ color: "white", fontSize: 12, fontFamily: "Montserrat_600" }}
+        >
           {tag}
         </Text>
       </View>
@@ -126,41 +137,64 @@ const PostCard = ({
       >
         <View
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: 8,
+            backgroundColor: "rgba(157,163,174)",
             borderRadius: 20,
           }}
         >
-          <AntDesign name="pushpin" size={16} color="#495057" />
+          <Image
+            source={IMAGES.PinWhite}
+            style={{ height: RFValue(26), width: RFValue(26) }}
+            resizeMode="contain"
+          />
         </View>
         <View
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: 8,
             borderRadius: 20,
             alignItems: "center",
+            height: RFPercentage(5),
+            width: RFPercentage(5),
+            justifyContent: "center",
           }}
         >
           <EvilIcons name="like" size={16} color="#000" />
-          <Text style={{ fontSize: 12, marginLeft: 4, color: "#333" }}>
+          <Text
+            style={{
+              fontSize: 12,
+              marginLeft: 4,
+              color: "#333",
+              fontFamily: "Montserrat_400",
+            }}
+          >
             352
           </Text>
         </View>
         <View
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: 8,
             borderRadius: 20,
             alignItems: "center",
+            height: RFPercentage(5),
+            width: RFPercentage(5),
+            justifyContent: "center",
           }}
         >
           <MaterialIcons name="message" size={14} color="#495057" />
-          <Text style={{ fontSize: 12, marginLeft: 4, color: "#333" }}>95</Text>
+          <Text
+            style={{
+              fontSize: 12,
+              marginLeft: 4,
+              color: "#333",
+              fontFamily: "Montserrat_400",
+            }}
+          >
+            95
+          </Text>
         </View>
       </View>
     </View>
 
-    <View style={{ padding: 15 }}>
+    <View style={{ padding: RFValue(10) }}>
       <View
         style={{
           flexDirection: "row",
@@ -169,12 +203,25 @@ const PostCard = ({
           marginBottom: 8,
         }}
       >
-        <Text style={{ fontSize: 12, color: "#6c757d" }}>
+        <Text
+          style={{
+            fontSize: RFValue(10),
+            color: "#6c757d",
+            fontFamily: "Montserrat_400",
+          }}
+        >
           POSTED ON: 7/25/2025
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Feather name="eye" size={14} color="#6c757d" />
-          <Text style={{ fontSize: 12, color: "#6c757d", marginLeft: 4 }}>
+          <Feather name="eye" size={20} color="#6c757d" />
+          <Text
+            style={{
+              fontSize: RFValue(10),
+              color: "#6c757d",
+              marginLeft: 4,
+              fontFamily: "Montserrat_400",
+            }}
+          >
             821
           </Text>
         </View>
@@ -182,8 +229,8 @@ const PostCard = ({
 
       <Text
         style={{
-          fontSize: 18,
-          fontWeight: "bold",
+          fontSize: RFValue(14),
+          fontFamily: "Montserrat_600",
           marginBottom: 8,
           color: "#343a40",
         }}
@@ -192,33 +239,66 @@ const PostCard = ({
       </Text>
       <Text
         style={{
-          fontSize: 14,
+          fontSize: RFValue(10),
           color: "#495057",
-          lineHeight: 20,
           marginBottom: 10,
+          fontFamily: "Montserrat_400",
         }}
       >
-        {description.substring(0, 150)}...
+        {description.substring(0, 300)}...
       </Text>
+
+      <View style={{borderBottomColor:"rgb(239,240,242)",borderBottomWidth:0.5,marginVertical:RFValue(5)}} />
 
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          marginBottom: 15,
+          marginBottom: RFValue(15),
+          marginTop:RFValue(5)
         }}
       >
         <View>
-          <Text style={{ fontSize: 12, color: "#6c757d" }}>Published by:</Text>
-          <Text style={{ fontSize: 14, fontWeight: "500", color: "#343a40" }}>
+          <Text
+            style={{
+              fontSize: 12,
+              color: "#6c757d",
+              fontFamily: "Montserrat_400",
+            }}
+          >
+            Published by:
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Montserrat_600",
+              color: "#343a40",
+            }}
+          >
             {publishedBy}
           </Text>
         </View>
-        <View style={{alignItems:'flex-start',justifyContent:'flex-start'}}>
-          <Text style={{ fontSize: 12, color: "#6c757d", textAlign: "right" }}>
+        <View
+          style={{ alignItems: "flex-start", justifyContent: "flex-start" }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              color: "#6c757d",
+              textAlign: "right",
+              fontFamily: "Montserrat_400",
+            }}
+          >
             Audience:
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: "500", color: "#343a40" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: "500",
+              color: "#343a40",
+              fontFamily: "Montserrat_500",
+            }}
+          >
             {audience}
           </Text>
         </View>
@@ -233,11 +313,12 @@ const PostCard = ({
       >
         <TouchableOpacity
           style={{
-            padding: RFValue(8),
+            padding: RFValue(12),
             borderRadius: 5,
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor:'rgb(244,247,248)'
+            backgroundColor: "rgb(244,247,248)",
+            marginRight:RFValue(10)
           }}
         >
           <Entypo name="share" size={18} color="#000" />
@@ -246,13 +327,19 @@ const PostCard = ({
         <TouchableOpacity
           style={{
             backgroundColor: "rgb(238,253,255)",
-            paddingVertical: RFValue(10),
+            paddingVertical: RFValue(12),
             paddingHorizontal: RFValue(70),
-            borderRadius: RFValue(10),
+            borderRadius: RFValue(5),
           }}
           onPress={() => router.push("/tabs/community/CommunityPostDetails")}
         >
-          <Text style={{ color: "rgb(74,122,144)", fontWeight: "bold", fontSize: 14 }}>
+          <Text
+            style={{
+              color: "rgb(74,122,144)",
+              fontFamily: "Montserrat_600",
+              fontSize: 14,
+            }}
+          >
             Read Full Post
           </Text>
         </TouchableOpacity>
@@ -265,204 +352,205 @@ const PostCardHorizontal = ({
   title = "Empowering Education Leaders",
   publishedBy = "Jerome Bell",
   audience = "Education Leaders",
-  imageSource = { uri: "https://picsum.photos/400/200?random=1" },
   description = "Education Leaders Play A Crucial Role In Shaping The Future Of Learning. They Inspire Teachers And Students Alike, Fostering An En...",
 }) => {
-  const combinedHeight = Sizing(100);
-
   return (
     <View
       style={{
-        width: CARD_WIDTH,
-        borderRadius: 16,
-        overflow: "hidden",
+        width: RFPercentage(35), // dynamic width (~40% of screen height, scales well horizontally)
+        borderRadius: RFValue(13),
         backgroundColor: "#fff",
-        alignSelf: "center",
-        marginVertical: 10,
+        overflow: "hidden",
+        marginRight: RFValue(8),
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 5,
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 3 },
+        shadowRadius: RFValue(6),
+        elevation: 2,
         borderWidth: 1,
-        borderColor: "rgba(0,0,0,0.05)",
+        borderColor: "rgba(0,0,0,0.04)",
       }}
     >
-      <View
-        style={{
-          height: combinedHeight,
-          overflow: "hidden",
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-        }}
-      >
+      {/* --- Image Section --- */}
+      <View style={{ height: RFPercentage(24) }}>
         <ImageBackground
-          source={imageSource}
+          source={IMAGES.CommunityPostHeader}
           resizeMode="cover"
-          style={{ flex: 1, width: "100%" }}
-          imageStyle={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+          style={{ flex: 1, height: RFPercentage(11) }}
+          imageStyle={{ alignSelf: "flex-end" }}
         >
+          {/* Gradient left → right */}
           <LinearGradient
             colors={[
-              "rgba(255, 255, 255, 0.0)",
-              "rgba(255, 255, 255, 0.2)",
-              "rgba(255, 255, 255, 0.7)",
-              "#ffffff",
+              "rgba(255,255,255,1)",
+              "rgba(255,255,255,1)",
+              "rgba(255,255,255,1)",
+              "rgba(255,255,255,0.9)",
+              "rgba(255,255,255,0.6)",
+              "rgba(255,255,255,0.0)",
             ]}
-            locations={[0.0, 0.5, 0.8, 1.0]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
             style={{
               position: "absolute",
               left: 0,
-              right: 0,
+              top: 0,
               bottom: 0,
-              height: combinedHeight,
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
+              right: 0,
+              borderTopLeftRadius: RFValue(16),
+              borderTopRightRadius: RFValue(16),
             }}
           />
 
+          {/* Left overlay text */}
           <View
             style={{
-              position: "absolute",
               left: 0,
-              paddingHorizontal: Sizing(15),
-              paddingTop: Sizing(5),
-              paddingBottom: Sizing(10),
-              width: "60%",
-              backgroundColor: "#fff",
-              height: combinedHeight,
+              top: 10,
+              bottom: 0,
+              width: "80%",
+              justifyContent: "center",
+              paddingHorizontal: RFValue(12),
             }}
           >
             <Text
               style={{
-                fontSize: 12,
-                color: "#7f7f7f",
-                marginBottom: 5,
-                fontWeight: "600",
+                fontSize: RFValue(8),
+                color: "rgb(187,189,196)",
+                marginBottom: RFValue(4),
+                fontFamily: "Montserrat_500",
               }}
             >
               POSTED ON: 7/25/2025
             </Text>
             <Text
               style={{
-                fontSize: Sizing(18),
-                fontWeight: "bold",
-                color: "#333",
-                width: "100%",
+                fontSize: RFValue(12),
+                fontFamily: "Montserrat_700",
+                color: "#1A1A1A",
               }}
             >
               {title}
             </Text>
           </View>
 
+          {/* Badge */}
           <View
             style={{
+              backgroundColor: "#fff",
+              width: RFValue(18),
+              height: RFValue(18),
               position: "absolute",
-              top: Sizing(15),
-              right: Sizing(15),
-              backgroundColor: "#0d6efd",
-              borderRadius: Sizing(20),
-              width: Sizing(30),
-              height: Sizing(30),
+              top: RFValue(14),
+              right: RFValue(15),
               justifyContent: "center",
               alignItems: "center",
             }}
           >
+            <Image
+              source={IMAGES.Pin}
+              style={{
+                width: RFValue(28),
+                height: RFValue(28),
+              }}
+            />
+          </View>
+          {/* --- Description --- */}
+          <View
+            style={{
+              paddingHorizontal: RFValue(12),
+              paddingVertical: RFValue(10),
+              marginTop: RFValue(10),
+            }}
+          >
             <Text
               style={{
-                color: "#fff",
-                fontSize: Sizing(16),
-                lineHeight: Sizing(16) + 2,
+                fontSize: RFValue(10),
+                color: "#555",
+                fontFamily: "Montserrat_400",
+                marginBottom: RFValue(8),
+              }}
+              numberOfLines={3}
+            >
+              {description}
+            </Text>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: RFValue(4),
               }}
             >
-              📣
-            </Text>
+              <View>
+                <Text
+                  style={{
+                    fontSize: RFValue(9),
+                    color: "#8A8A8A",
+                    fontFamily: "Montserrat_500",
+                    marginBottom: RFValue(2),
+                  }}
+                >
+                  PUBLISHED BY:
+                </Text>
+                <Text
+                  style={{
+                    fontSize: RFValue(10),
+                    color: "#1A1A1A",
+                    fontFamily: "Montserrat_700",
+                  }}
+                >
+                  {publishedBy}
+                </Text>
+              </View>
+
+              <View style={{ alignItems: "flex-start" }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(9),
+                    color: "#8A8A8A",
+                    fontFamily: "Montserrat_500",
+                    marginBottom: RFValue(2),
+                  }}
+                >
+                  AUDIENCE:
+                </Text>
+                <Text
+                  style={{
+                    fontSize: RFValue(10),
+                    color: "#1A1A1A",
+                    fontFamily: "Montserrat_700",
+                  }}
+                >
+                  {audience}
+                </Text>
+              </View>
+            </View>
           </View>
         </ImageBackground>
       </View>
 
-      <View
-        style={{ paddingHorizontal: Sizing(15), paddingBottom: Sizing(15) }}
-      >
-        <Text
-          style={{
-            fontSize: 15,
-            color: COLORS.lightText,
-            lineHeight: 22,
-            marginBottom: 10,
-            marginTop: Sizing(5),
-          }}
-          numberOfLines={3}
-        >
-          {description}
-        </Text>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 5,
-          }}
-        >
-          <View>
-            <Text
-              style={{
-                fontSize: 12,
-                color: COLORS.lightText,
-                fontWeight: "600",
-                marginBottom: 3,
-              }}
-            >
-              PUBLISHED BY:
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#333",
-              }}
-            >
-              {publishedBy}
-            </Text>
-          </View>
-
-          <View style={{ alignItems: "flex-end" }}>
-            <Text
-              style={{
-                fontSize: 12,
-                color: COLORS.lightText,
-                fontWeight: "600",
-                marginBottom: 3,
-              }}
-            >
-              AUDIENCE:
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: "#333",
-              }}
-            >
-              {audience}
-            </Text>
-          </View>
-        </View>
-      </View>
-
+      {/* --- CTA --- */}
       <TouchableOpacity
         style={{
-          backgroundColor: "#eefdff",
-          paddingVertical: 15,
+          backgroundColor: "rgb(238,253,255)",
+          paddingVertical: RFValue(6),
           alignItems: "center",
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
           borderTopWidth: 1,
           borderColor: "rgba(0,0,0,0.05)",
+          borderRadius: RFValue(5),
+          marginBottom: RFValue(10),
+          marginHorizontal: RFValue(10),
         }}
         onPress={() => router.push("/tabs/community/CommunityPostDetails")}
       >
-        <Text style={{ color: "#4787a4", fontWeight: "bold", fontSize: 16 }}>
+        <Text
+          style={{
+            color: "rgb(50,113,148)",
+            fontFamily: "Montserrat_600",
+            fontSize: RFValue(10),
+          }}
+        >
           Read Full Post
         </Text>
       </TouchableOpacity>
@@ -471,6 +559,17 @@ const PostCardHorizontal = ({
 };
 
 export default function Community() {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    // ✅ Add your refresh API logic here
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  };
+
   const ImagePlaceholders = {
     cyber: { uri: "https://picsum.photos/id/1018/700/400" },
     island: { uri: "https://picsum.photos/id/10/700/400" },
@@ -534,7 +633,7 @@ export default function Community() {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#f8f9fa",
+        backgroundColor: "#ffff",
         paddingTop: RFPercentage(7),
       }}
     >
@@ -567,6 +666,9 @@ export default function Community() {
           paddingBottom: 40,
           backgroundColor: "#f8f9fa",
         }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
         <ImageBackground
           source={IMAGES.ScheduleBg}
@@ -576,8 +678,8 @@ export default function Community() {
           <View style={{ paddingHorizontal: 20 }}>
             <Text
               style={{
-                fontSize: RFValue(18),
-                fontWeight: "bold",
+                fontSize: RFValue(14),
+                fontFamily: "Montserrat_700",
                 color: COLORS.white,
                 marginTop: 15,
                 marginBottom: 10,
@@ -588,8 +690,8 @@ export default function Community() {
 
             <Text
               style={{
-                fontSize: RFValue(15),
-                fontWeight: "400",
+                fontSize: RFValue(12),
+                fontFamily: "Montserrat_400",
                 color: COLORS.white,
                 marginBottom: 15,
                 marginTop: RFValue(10),
@@ -615,7 +717,7 @@ export default function Community() {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              paddingHorizontal: 16,
+              paddingHorizontal: RFValue(16),
             }}
           >
             {/* View Drafts Button */}
@@ -655,7 +757,7 @@ export default function Community() {
                   style={{
                     color: "#fff",
                     fontSize: RFValue(6),
-                    fontWeight: "600",
+                    fontFamily: "Montserrat_600",
                   }}
                 >
                   5
@@ -675,7 +777,11 @@ export default function Community() {
               >
                 <Image
                   source={IMAGES.Drafts}
-                  style={{ width: 16, height: 16, tintColor: "#777" }}
+                  style={{
+                    width: RFValue(16),
+                    height: RFValue(16),
+                    tintColor: "#777",
+                  }}
                 />
               </View>
 
@@ -683,8 +789,8 @@ export default function Community() {
                 style={{
                   fontSize: 13,
                   color: "#000",
-                  fontWeight: "500",
-                  marginLeft: RFValue(10),
+                  fontFamily: "Montserrat_400",
+                  marginLeft: RFValue(5),
                 }}
               >
                 View Your Drafts
@@ -707,7 +813,9 @@ export default function Community() {
                 shadowRadius: 4,
                 elevation: 2,
               }}
-              onPress={() => router.push("/tabs/community/CommunitycreateNewPost")}
+              onPress={() =>
+                router.push("/tabs/community/CommunitycreateNewPost")
+              }
             >
               <View
                 style={{
@@ -722,11 +830,21 @@ export default function Community() {
               >
                 <Image
                   source={IMAGES.Create}
-                  style={{ width: 16, height: 16, tintColor: "#777" }}
+                  style={{
+                    width: RFValue(16),
+                    height: RFValue(16),
+                    tintColor: "#777",
+                  }}
                 />
               </View>
 
-              <Text style={{ fontSize: 13, color: "#000", fontWeight: "500" }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: "#000",
+                  fontFamily: "Montserrat_400",
+                }}
+              >
                 Start New Post
               </Text>
             </TouchableOpacity>
@@ -737,7 +855,7 @@ export default function Community() {
               flexDirection: "row",
               alignItems: "center",
               //
-              marginHorizontal: (width - POST_CARD_WIDTH) / 2,
+              paddingHorizontal: RFValue(16),
               marginTop: RFValue(20),
             }}
           >
@@ -758,7 +876,7 @@ export default function Community() {
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
                 borderRightWidth: 0,
-                marginRight:RFValue(10)
+                marginRight: RFValue(10),
               }}
             >
               {/* Placeholder for "Search by Keywords" */}
@@ -768,6 +886,7 @@ export default function Community() {
                   height: "100%",
                   fontSize: 16,
                   paddingVertical: 0,
+                  fontFamily: "Montserrat_400",
                 }}
                 placeholder="Search by Keywords"
                 placeholderTextColor="#6c757d"
@@ -808,6 +927,7 @@ export default function Community() {
             alignItems: "center",
             paddingVertical: 15,
             backgroundColor: "#f8f9fa",
+            paddingBottom:RFPercentage(20)
           }}
         >
           {dummyPosts.map((post) => (

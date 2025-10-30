@@ -23,4 +23,10 @@ export const Homebackground = require("../assets/images/Homebackground.png");
 export const HomeBg = require("../assets/images/HomeBg.png");
 export const HomeLogo = require("../assets/images/HomeLogo.png");
 
+export const Edit = require("../assets/images/edit.png");
+export const Trash = require("../assets/images/trash.png");
+export const Pin = require("../assets/images/pin.png");
+export const PinWhite = require("../assets/images/PinWhite.png");
+export const CommunityPostHeader = require("../assets/images/CommunityPostHeader.png");
+
 export const HomeImage = require("../assets/videos/HomeScreen.mp4")

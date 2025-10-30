@@ -179,7 +179,8 @@ const SpeakerCard = ({ speaker }) => (
       borderRadius: RFValue(10),
       alignItems: "center",
       paddingVertical: RFValue(4),
-      paddingLeft: RFValue(10),
+      justifyContent: "center",
+      // paddingLeft: RFValue(10),
     }}
   >
     <Image
@@ -188,16 +189,15 @@ const SpeakerCard = ({ speaker }) => (
         width: RFValue(20),
         height: RFValue(20),
         borderRadius: RFValue(20),
-        marginRight: RFValue(10),
+        marginRight: RFValue(5),
       }}
       resizeMode="contain"
     />
     <Text
       style={{
         fontSize: RFValue(9),
-        fontWeight: "600",
         color: COLORS.darkText,
-        flexShrink: 1,
+        fontFamily: "Montserrat_400",
       }}
       numberOfLines={1}
     >
@@ -209,11 +209,9 @@ const SpeakerCard = ({ speaker }) => (
 const SessionTag = ({ tag }) => (
   <View
     style={{
-      paddingHorizontal: RFValue(8),
-
+      paddingHorizontal: RFValue(7),
       borderRadius: RFValue(15),
-      marginRight: RFValue(8),
-
+      marginRight: RFValue(5),
       backgroundColor: "rgb(244,247,248)",
       height: RFValue(15),
       alignItems: "center",
@@ -222,8 +220,8 @@ const SessionTag = ({ tag }) => (
   >
     <Text
       style={{
-        fontSize: RFValue(6),
-        fontWeight: "600",
+        fontSize: RFValue(7),
+        fontFamily: "Montserrat_400",
         color: "rgb(87,130,151)",
       }}
     >
@@ -237,10 +235,8 @@ const AgendaSessionCard = ({ session }) => (
     style={{
       backgroundColor: COLORS.white,
       paddingVertical: RFValue(15),
-
       borderRadius: RFValue(10),
       marginBottom: RFValue(12),
-
       elevation: 2,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 1 },
@@ -251,7 +247,7 @@ const AgendaSessionCard = ({ session }) => (
     <Text
       style={{
         fontSize: RFValue(12),
-        fontWeight: "bold",
+        fontFamily: "Montserrat_700",
         color: COLORS.darkText,
         marginBottom: RFValue(5),
         paddingHorizontal: RFValue(20),
@@ -263,14 +259,23 @@ const AgendaSessionCard = ({ session }) => (
       style={{
         fontSize: RFValue(10),
         color: COLORS.lightText,
-        lineHeight: RFValue(17),
         marginBottom: RFValue(10),
         paddingHorizontal: RFValue(20),
+        fontFamily: "Montserrat_400",
       }}
+      numberOfLines={3}
     >
       {session.description}
     </Text>
 
+    <View
+      style={{
+        borderWidth: 0.5,
+        borderColor: "rgb(242,243,245)",
+        marginHorizontal: RFValue(20),
+        marginVertical: RFValue(2),
+      }}
+    />
     {/* Speaker/Presenter Details */}
     <View
       style={{
@@ -278,12 +283,12 @@ const AgendaSessionCard = ({ session }) => (
         marginBottom: RFValue(10),
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: RFValue(20),
+        paddingHorizontal: RFValue(15),
       }}
     >
       <Image
         source={{ uri: "https://i.pravatar.cc/150?img=8" }}
-        style={{ height: RFValue(30), width: RFValue(30), borderRadius: 50 }}
+        style={{ height: RFValue(33), width: RFValue(33), borderRadius: 50 }}
         resizeMode="contain"
       />
 
@@ -291,7 +296,7 @@ const AgendaSessionCard = ({ session }) => (
         <Text
           style={{
             fontSize: RFValue(10),
-            fontWeight: "bold",
+            fontFamily: "Montserrat_700",
             color: COLORS.darkText,
           }}
         >
@@ -299,9 +304,11 @@ const AgendaSessionCard = ({ session }) => (
         </Text>
         <Text
           style={{
-            fontSize: RFValue(11),
+            fontSize: RFValue(8),
             color: COLORS.lightText,
-            width: "80%",
+            width: "98%",
+            fontFamily: "Montserrat_400",
+            marginTop: RFValue(2),
           }}
         >
           {session.speakerTitle}
@@ -328,8 +335,11 @@ const AgendaSessionCard = ({ session }) => (
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-
-        paddingHorizontal: RFValue(20),
+        backgroundColor: "rgb(245,246,247)",
+        marginHorizontal: RFValue(10),
+        paddingHorizontal: RFValue(10),
+        paddingVertical: RFValue(3),
+        borderRadius: RFValue(20),
       }}
     >
       <View
@@ -339,16 +349,12 @@ const AgendaSessionCard = ({ session }) => (
           marginRight: RFValue(10),
         }}
       >
-        <Ionicons
-          name="calendar-outline"
-          size={RFValue(10)}
-          color={COLORS.lightText}
-        />
         <Text
           style={{
             marginLeft: RFValue(5),
             fontSize: RFValue(9),
             color: COLORS.darkText,
+            fontFamily: "Montserrat_400",
           }}
         >
           {session.date}
@@ -361,16 +367,20 @@ const AgendaSessionCard = ({ session }) => (
           marginRight: RFValue(10),
         }}
       >
-        <Ionicons
-          name="time-outline"
-          size={RFValue(10)}
-          color={COLORS.lightText}
+        <View
+          style={{
+            borderWidth: 0.5,
+            height: RFValue(7),
+            borderColor: "rgb(231,233,236)",
+            marginRight: RFValue(5),
+          }}
         />
         <Text
           style={{
             marginLeft: RFValue(5),
             fontSize: RFValue(9),
             color: COLORS.darkText,
+            fontFamily: "Montserrat_400",
           }}
         >
           {session.time}
@@ -383,12 +393,20 @@ const AgendaSessionCard = ({ session }) => (
           marginRight: RFValue(10),
         }}
       >
-        <Feather name="globe" size={RFValue(10)} color={COLORS.lightText} />
+        <View
+          style={{
+            borderWidth: 0.5,
+            height: RFValue(7),
+            borderColor: "rgb(231,233,236)",
+            marginRight: RFValue(5),
+          }}
+        />
         <Text
           style={{
             marginLeft: RFValue(5),
             fontSize: RFValue(9),
             color: COLORS.darkText,
+            fontFamily: "Montserrat_400",
           }}
         >
           {session.location}
@@ -398,172 +416,164 @@ const AgendaSessionCard = ({ session }) => (
   </View>
 );
 
- const SelectCalendarModal = ({ isVisible, onClose }) => {
-    const MODAL_COLORS = {
-      modalBackground: "rgba(0, 0, 0, 0.5)",
-      cardBg: COLORS.white,
-      divider: "#CCCCCC",
-    };
-
-    return (
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onClose}
-      >
-        <TouchableWithoutFeedback onPress={onClose}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-end",
-              backgroundColor: MODAL_COLORS.modalBackground,
-            }}
-          >
-            <TouchableWithoutFeedback>
-              <View
-                style={{
-                  backgroundColor: COLORS.white,
-                  borderTopLeftRadius: RFValue(25),
-                  borderTopRightRadius: RFValue(25),
-                  paddingHorizontal: RFValue(20),
-                  paddingTop: RFValue(15),
-                  paddingBottom: RFPercentage(5),
-                }}
-              >
-                {/* Drag Indicator */}
-                <View
-                  style={{
-                    width: RFValue(40),
-                    height: RFValue(4),
-                    backgroundColor: MODAL_COLORS.divider,
-                    borderRadius: 2,
-                    alignSelf: "center",
-                    marginBottom: RFValue(20),
-                  }}
-                />
-
-                {/* Title */}
-                <Text
-                  style={{
-                    fontSize: RFValue(18),
-                    fontWeight: "bold",
-                    color: COLORS.darkText,
-                    marginBottom: RFValue(30),
-                  }}
-                >
-                  Select A Calendar
-                </Text>
-
-                {/* Calendar Options */}
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {/* Google Calendar Card */}
-                  <TouchableOpacity
-                    style={{
-                      flex: 1,
-                      backgroundColor: MODAL_COLORS.cardBg,
-                      borderRadius: RFValue(15),
-                      padding: RFValue(10),
-                      alignItems: "center",
-                      justifyContent: "center",
-                      elevation: 5,
-                      shadowColor: "#000",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.1,
-                      shadowRadius: 3.84,
-                      margin: RFPercentage(2),
-                    }}
-                    onPress={() => {
-                      onClose();
-                    }}
-                  >
-                    <Image
-                      source={IMAGES.GoogleCalender}
-                      style={{
-                        width: RFValue(50),
-                        height: RFValue(50),
-                        marginBottom: RFValue(10),
-                      }}
-                      resizeMode="contain"
-                    />
-                    <Text
-                      style={{
-                        fontSize: RFValue(12),
-                        fontWeight: "400",
-                        color: COLORS.darkText,
-                      }}
-                    >
-                      Google Calendar
-                    </Text>
-                  </TouchableOpacity>
-
-                  {/* MS 365 Calendar Card */}
-                  <TouchableOpacity
-                    style={{
-                      flex: 1,
-                      backgroundColor: MODAL_COLORS.cardBg,
-                      borderRadius: RFValue(15),
-                      padding: RFValue(20),
-                      alignItems: "center",
-                      justifyContent: "center",
-                      elevation: 5,
-                      shadowColor: "#000",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.1,
-                      shadowRadius: 3.84,
-                      margin: RFPercentage(2),
-                    }}
-                    onPress={() => {
-                      console.log("MS 365 Calendar Selected");
-                      onClose();
-                    }}
-                  >
-                    <Image
-                      source={IMAGES.Microsoft}
-                      style={{
-                        width: RFValue(50),
-                        height: RFValue(50),
-                        marginBottom: RFValue(10),
-                      }}
-                      resizeMode="contain"
-                    />
-                    <Text
-                      style={{
-                        fontSize: RFValue(12),
-                        fontWeight: "400",
-                        color: COLORS.darkText,
-                      }}
-                    >
-                      MS 365 Calendar
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-    );
+const SelectCalendarModal = ({ isVisible, onClose }) => {
+  const MODAL_COLORS = {
+    modalBackground: "rgba(0, 0, 0, 0.5)",
+    cardBg: COLORS.white,
+    divider: "#CCCCCC",
   };
+
+  return (
+   <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={onClose}
+        >
+          <TouchableWithoutFeedback onPress={onClose}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                backgroundColor: MODAL_COLORS.modalBackground,
+              }}
+            >
+              <TouchableWithoutFeedback>
+                <View
+                  style={{
+                    backgroundColor: COLORS.white,
+                    borderTopLeftRadius: RFValue(25),
+                    borderTopRightRadius: RFValue(25),
+                    paddingHorizontal: RFValue(10),
+                    paddingTop: RFValue(10),
+                    paddingBottom: RFPercentage(5),
+                  }}
+                >
+                  {/* Drag Indicator */}
+                  <View
+                    style={{
+                      width: RFValue(40),
+                      height: RFValue(4),
+                      backgroundColor: MODAL_COLORS.divider,
+                      borderRadius: 2,
+                      alignSelf: "center",
+                      marginBottom: RFValue(20),
+                    }}
+                  />
+  
+                  {/* Title */}
+                  <Text
+                    style={{
+                      fontSize: RFValue(14),
+                      fontWeight: "bold",
+                      color: COLORS.darkText,
+                      marginBottom: RFValue(20),
+                      fontFamily: "Montserrat_600",
+                    }}
+                  >
+                    Select A Calendar
+                  </Text>
+  
+                  {/* Calendar Options */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {/* Google Calendar Card */}
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        backgroundColor: 'rgb(245,246,247)',
+                        borderRadius: RFValue(10),
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginRight:RFValue(10),
+                        paddingVertical:RFValue(15)
+                      }}
+                      onPress={() => {
+                        onClose();
+                      }}
+                    >
+                      <Image
+                        source={IMAGES.GoogleCalender}
+                        style={{
+                          width: RFValue(30),
+                          height: RFValue(30),
+                          marginBottom: RFValue(10),
+                        }}
+                        resizeMode="contain"
+                      />
+                      <Text
+                        style={{
+                          fontSize: RFValue(10),
+                          fontWeight: "400",
+                          color: COLORS.darkText,
+                          fontFamily: "Montserrat_400",
+                        }}
+                      >
+                        Google Calendar
+                      </Text>
+                    </TouchableOpacity>
+  
+                    {/* MS 365 Calendar Card */}
+                    <TouchableOpacity
+                       style={{
+                        flex: 1,
+                        backgroundColor: 'rgb(245,246,247)',
+                        borderRadius: RFValue(10),
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingVertical:RFValue(15)
+                      }}
+                      onPress={() => {
+                        console.log("MS 365 Calendar Selected");
+                        onClose();
+                      }}
+                    >
+                      <Image
+                        source={IMAGES.Microsoft}
+                        style={{
+                          width: RFValue(30),
+                          height: RFValue(30),
+                          marginBottom: RFValue(10),
+                        }}
+                        resizeMode="contain"
+                      />
+                      <Text
+                        style={{
+                          fontSize: RFValue(10),
+                          fontWeight: "400",
+                          color: COLORS.darkText,
+                          fontFamily: "Montserrat_400",
+                        }}
+                      >
+                        MS 365 Calendar
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+  );
+};
 export default function EventDetails() {
   const [selectedDayId, setSelectedDayId] = useState("1");
-   const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
+  const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
 
-
-   const toggleCalenderModal = () => {
+  const toggleCalenderModal = () => {
     setCalendarModalVisible(!isCalendarModalVisible);
   };
   const router = useRouter();
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+    <View style={{ flex: 1, backgroundColor: "rgb(240,242,246)" }}>
       {/* Header Bar */}
-      <View
+      <TouchableOpacity
+        onPress={() => router.back()}
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -573,24 +583,24 @@ export default function EventDetails() {
           paddingTop: RFPercentage(8),
         }}
       >
-        <TouchableOpacity onPress={() => router.back()}>
+        <View onPress={() => router.back()}>
           <Ionicons
             name="chevron-back"
             size={RFValue(20)}
             color={COLORS.darkText}
           />
-        </TouchableOpacity>
+        </View>
         <Text
           style={{
             fontSize: RFValue(16),
-            fontWeight: "600",
+            fontFamily: "Montserrat_500",
             color: COLORS.darkText,
             marginLeft: RFValue(15),
           }}
         >
           Event Details
         </Text>
-      </View>
+      </TouchableOpacity>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -603,21 +613,25 @@ export default function EventDetails() {
           style={{
             width: "100%",
             height: width * 0.5,
+            paddingHorizontal: RFValue(20),
+            paddingVertical: RFValue(10),
+            borderTopLeftRadius: RFValue(10),
+            borderTopRightRadius: RFValue(10),
           }}
         />
 
         <View
           style={{
             paddingHorizontal: RFValue(20),
-            paddingTop: RFValue(10),
+            paddingTop: RFValue(5),
             backgroundColor: COLORS.background,
           }}
         >
           {/* --- Event Title and Info --- */}
           <Text
             style={{
-              fontSize: RFValue(16),
-              fontWeight: "bold",
+              fontSize: RFValue(14),
+              fontFamily: "Montserrat_600",
               color: COLORS.darkText,
               marginBottom: RFValue(5),
             }}
@@ -629,7 +643,7 @@ export default function EventDetails() {
               fontSize: RFValue(10),
               color: COLORS.lightText,
               marginBottom: RFValue(10),
-              lineHeight: RFValue(18),
+              fontFamily: "Montserrat_400",
             }}
           >
             Lorem ipsum dolor sit amet consectetur. Sed ullamcorper sit
@@ -640,11 +654,11 @@ export default function EventDetails() {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginBottom: RFValue(25),
+              marginBottom: RFValue(15),
               borderBottomWidth: 1,
               borderBottomColor: COLORS.separator,
               paddingBottom: RFValue(15),
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
             }}
           >
             <View
@@ -664,6 +678,7 @@ export default function EventDetails() {
                   marginLeft: RFValue(5),
                   fontSize: RFValue(10),
                   color: COLORS.darkText,
+                  fontFamily: "Montserrat_400",
                 }}
               >
                 09:00 CST
@@ -686,6 +701,7 @@ export default function EventDetails() {
                   marginLeft: RFValue(5),
                   fontSize: RFValue(10),
                   color: COLORS.darkText,
+                  fontFamily: "Montserrat_400",
                 }}
               >
                 Salt Lake City, Utah
@@ -694,17 +710,13 @@ export default function EventDetails() {
           </View>
 
           {/* --- Speakers Section --- */}
-          <View
-            style={{
-              marginBottom: RFValue(30),
-            }}
-          >
+          <View>
             <Text
               style={{
-                fontSize: RFValue(16),
-                fontWeight: "bold",
+                fontSize: RFValue(13),
+                fontFamily: "Montserrat_600",
                 color: COLORS.darkText,
-                marginBottom: RFValue(15),
+                marginBottom: RFValue(10),
               }}
             >
               Speakers
@@ -714,7 +726,6 @@ export default function EventDetails() {
                 flexDirection: "row",
                 flexWrap: "wrap",
                 justifyContent: "space-between",
-                marginBottom: RFValue(10),
                 paddingHorizontal: RFValue(0),
                 borderBottomWidth: 1,
                 borderColor: COLORS.mediumGrey,
@@ -734,10 +745,11 @@ export default function EventDetails() {
           >
             <Text
               style={{
-                fontSize: RFValue(16),
-                fontWeight: "bold",
+                fontSize: RFValue(13),
+                fontFamily: "Montserrat_600",
                 color: COLORS.darkText,
                 marginBottom: RFValue(15),
+                marginTop: RFValue(5),
               }}
             >
               Agenda
@@ -774,8 +786,8 @@ export default function EventDetails() {
                     >
                       <Text
                         style={{
-                          fontSize: RFValue(14),
-                          fontWeight: "600",
+                          fontSize: RFValue(10),
+                          fontFamily: "Montserrat_400",
                           color: isFocused ? COLORS.white : COLORS.darkText,
                         }}
                       >
@@ -784,7 +796,7 @@ export default function EventDetails() {
                       <Text
                         style={{
                           fontSize: RFValue(14),
-                          fontWeight: "600",
+                          fontFamily: "Montserrat_600",
                           color: isFocused ? COLORS.white : COLORS.darkText,
                         }}
                       >
@@ -799,8 +811,7 @@ export default function EventDetails() {
             {/* Agenda Sessions List */}
             <View
               style={{
-                marginTop: RFValue(15),
-
+                marginTop: RFValue(10),
                 paddingHorizontal: RFValue(0),
                 marginBottom: RFPercentage(15),
               }}
@@ -823,27 +834,28 @@ export default function EventDetails() {
           width: "100%",
           paddingHorizontal: RFValue(20),
           paddingVertical: RFValue(12),
-          backgroundColor:'rgb(242,243,247)',
+          backgroundColor: "rgb(242,243,247)",
           borderTopWidth: 1,
           borderColor: COLORS.mediumGrey,
+          paddingBottom:RFValue(20)
         }}
       >
         {/* 1. Icon Button */}
         <TouchableOpacity
           style={{
             width: RFValue(50),
-            height: RFValue(50),
+            height: RFValue(40),
             borderRadius: RFValue(10),
-            backgroundColor: 'rgb(232,227,223)',
+            backgroundColor: "rgb(232,227,223)",
             alignItems: "center",
             justifyContent: "center",
           }}
-           onPress={() => router.push("/tabs/schedule/eventMaps")}
+          onPress={() => router.push("/tabs/schedule/eventMaps")}
         >
           <Image
-          source={IMAGES.Routing}
-          resizeMode="contain"
-          style={{height:RFValue(17),width:RFValue(17)}}
+            source={IMAGES.Routing}
+            resizeMode="contain"
+            style={{ height: RFValue(17), width: RFValue(17) }}
           />
         </TouchableOpacity>
 
@@ -851,7 +863,7 @@ export default function EventDetails() {
         <TouchableOpacity
           style={{
             flex: 1,
-            height: RFValue(50),
+            height: RFValue(40),
             borderRadius: RFValue(10),
             backgroundColor: "rgb(229,233,235)",
             alignItems: "center",
@@ -862,7 +874,7 @@ export default function EventDetails() {
           <Text
             style={{
               fontSize: RFValue(12),
-              fontWeight: "400",
+              fontFamily: "Montserrat_400",
               color: COLORS.darkText,
             }}
           >
@@ -874,18 +886,18 @@ export default function EventDetails() {
         <TouchableOpacity
           style={{
             flex: 1.5, // Make this button slightly wider
-            height: RFValue(50),
+            height: RFValue(40),
             borderRadius: RFValue(10),
-            backgroundColor: 'rgb(50,113,148)',
+            backgroundColor: "rgb(50,113,148)",
             alignItems: "center",
             justifyContent: "center",
           }}
-        onPress={toggleCalenderModal}
+          onPress={toggleCalenderModal}
         >
           <Text
             style={{
               fontSize: RFValue(12),
-              fontWeight: "400",
+              fontFamily: "Montserrat_400",
               color: COLORS.white,
             }}
           >
@@ -894,11 +906,10 @@ export default function EventDetails() {
         </TouchableOpacity>
       </View>
 
-
       <SelectCalendarModal
-              isVisible={isCalendarModalVisible}
-              onClose={toggleCalenderModal}
-            />
+        isVisible={isCalendarModalVisible}
+        onClose={toggleCalenderModal}
+      />
     </View>
   );
 }
